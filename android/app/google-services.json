@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1016598749752",
+    "project_id": "findprice96",
+    "storage_bucket": "findprice96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016598749752:android:611980c0af0c352288bccd",
+        "android_client_info": {
+          "package_name": "com.findprice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1016598749752-ai47p2nu0kpdm18tvc712pkf6ll3lt6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrPIxojFzLa6JX-i15HKCl37qhIc8iv4I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016598749752-ai47p2nu0kpdm18tvc712pkf6ll3lt6q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,8 +1,10 @@
-import React, {Component} from "react";
-import {Alert, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import React, {Component, useState} from "react";
+import {launchCamera} from 'react-native-image-picker';
+import {Alert, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import axios from "axios";
 import ModalDropdown from "react-native-modal-dropdown";
-
+import Geolocation from 'react-native-geolocation-service';
+import RNMlKit from 'react-native-firebase-mlkit';
 
 const showAlert = (err, msg) =>
     Alert.alert(
@@ -16,10 +18,7 @@ const showAlert = (err, msg) =>
         ],
     );
 
-
 export default class Scan extends Component {
-
-
     state = {
         product: '',
         lat: '',
@@ -27,6 +26,8 @@ export default class Scan extends Component {
         price: '',
         prod_ids: [],
         options: [],
+        image:'',
+        result:''
     }
 
     componentDidMount() {
@@ -48,25 +49,57 @@ export default class Scan extends Component {
                 }
             );
 
-        // (async () => {
-        //     let {status} = await Location.requestForegroundPermissionsAsync();
-        //     if (status !== 'granted') {
-        //         errorMsg = 'Permission to access location was denied';
-        //         showAlert("position", errorMsg);
-        //         return;
-        //     } else {
-        //         let location = await Location.getCurrentPositionAsync({});
-        //         console.log(location);
-        //         this.setState({lat: location.coords.latitude, long: location.coords.longitude});
-        //     }
-        // })();
+        (async () => {
+              try {
+                    const granted = await PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.CAMERA,
+                    {
+                        title: "Cool Photo App Camera Permission",
+                        message:
+                        "Cool Photo App needs access to your camera " +
+                        "so you can take awesome pictures.",
+                        buttonNeutral: "Ask Me Later",
+                        buttonNegative: "Cancel",
+                        buttonPositive: "OK"
+                    }
+                    );
+
+                    if (granted) {
+                        Geolocation.getCurrentPosition(
+                            (position) => {
+                            console.log(position);
+                            this.setState({lat: position.coords.latitude, long: position.coords.longitude});
+                            },
+                        (error) => {
+                          // See error code charts below.
+                            errorMsg = 'Permission to access location was denied';
+                            showAlert("position", errorMsg);
+                            console.log(error.code, error.message);
+                            },
+                        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+                        );
+                    }
+              } catch (err) {
+                  console.warn(err);
+              }
+        })();
+    };
+
+    onTakePhoto() {
+        launchCamera({mediaType: 'image'}, this.onImageSelect);
     }
 
+    async onImageSelect(media){
+        if (!media.didCancel) {
+            this.setState({image:media.assets[0].uri})
+            const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+            console.log('priceRecognized: ', priceRecognized);
+            this.setState({result: priceRecognized})
+        }
+    };
 
     onProductChange(text) {
         this.setState({product: this.state.prod_ids[text].id});
-
-
     }
 
     onPriceChange(text) {
@@ -144,6 +177,10 @@ export default class Scan extends Component {
                 </View>
                 <TouchableOpacity style={styles.loginBtn}>
                     <Text style={styles.loginText} onPress={() => this.handleScan()}>Add scan</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} onPress={this.onTakePhoto}>
+                    <Text style={styles.buttonText}>Take Photo</Text>
                 </TouchableOpacity>
 
             </View>
