@@ -196,6 +196,10 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics'
 
+    implementation (project(':react-native-firebase-mlkit')) {
+        exclude group: 'com.google.firebase'
+    }
+
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }

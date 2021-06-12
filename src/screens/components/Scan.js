@@ -1,5 +1,6 @@
 import React, {Component, useState} from "react";
-import {launchCamera} from 'react-native-image-picker';
+import launchCamera from 'react-native-image-picker';
+// import * as ImagePicker from "react-native-image-picker";
 import {Alert, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import axios from "axios";
 import ModalDropdown from "react-native-modal-dropdown";
@@ -7,16 +8,28 @@ import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
 
 const showAlert = (err, msg) =>
-    Alert.alert(
-        "Error " + err,
-        msg,
-        [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-        ],
-    );
+    Alert.alert("Error " + err, msg,[{text: "Cancel",style: "cancel",},],);
+
+// const camera = () => {
+//     const [image, setImage] = useState();
+//     const [result, setResult] = useState({});
+//
+//     const onTakePhoto = () => launchCamera({mediaType: 'image'}, onImageSelect);
+//
+//
+//     const onImageSelect = async media => {
+//         if (!media.didCancel) {
+//             setImage(media.assets[0].uri);
+//             // const processingResult =
+//             //   await vision().cloudDocumentTextRecognizerProcessImage(media.assets[0].uri);
+//             const deviceTextRecognition = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+//             console.log('Text Recognition On-Device', deviceTextRecognition);
+//             // console.log(processingResult);
+//             setResult(deviceTextRecognition);
+//         }
+//     };
+//     return onTakePhoto();
+// }
 
 export default class Scan extends Component {
     state = {
@@ -84,6 +97,35 @@ export default class Scan extends Component {
               }
         })();
     };
+
+    // cameraLaunch(){
+    // let options = {
+    //   storageOptions: {
+    //     skipBackup: true,
+    //     path: 'images',
+    //   },
+    // };
+    // launchCamera(options, (res) => {
+    //   console.log('Response = ', res);
+    //
+    //   if (res.didCancel) {
+    //     console.log('User cancelled image picker');
+    //   } else if (res.error) {
+    //     console.log('ImagePicker Error: ', res.error);
+    //   } else if (res.customButton) {
+    //     console.log('User tapped custom button: ', res.customButton);
+    //     alert(res.customButton);
+    //   } else {
+    //     const source = { uri: res.uri };
+    //     console.log('response', JSON.stringify(res));
+    //     // this.setState({
+    //     //   filePath: res,
+    //     //   fileData: res.data,
+    //     //   fileUri: res.uri
+    //     // });
+    //   }
+    // });
+// }
 
     onTakePhoto() {
         launchCamera({mediaType: 'image'}, this.onImageSelect);
@@ -179,7 +221,7 @@ export default class Scan extends Component {
                     <Text style={styles.loginText} onPress={() => this.handleScan()}>Add scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={this.onTakePhoto}>
+                <TouchableOpacity style={styles.button} onPress={() => this.onTakePhoto()}>
                     <Text style={styles.buttonText}>Take Photo</Text>
                 </TouchableOpacity>
 
