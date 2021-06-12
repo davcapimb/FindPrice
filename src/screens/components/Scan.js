@@ -1,7 +1,7 @@
 import React, {Component, useState} from "react";
-import launchCamera from 'react-native-image-picker';
+import {launchCamera} from 'react-native-image-picker';
 // import * as ImagePicker from "react-native-image-picker";
-import {Alert, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Alert, Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import axios from "axios";
 import ModalDropdown from "react-native-modal-dropdown";
 import Geolocation from 'react-native-geolocation-service';
@@ -127,18 +127,28 @@ export default class Scan extends Component {
     // });
 // }
 
-    onTakePhoto() {
-        launchCamera({mediaType: 'image'}, this.onImageSelect);
+    onTakePhoto= () => {
+        launchCamera({mediaType: 'image'}, async (media) => {
+            if (!media.didCancel) {
+                this.setState({image:media.assets[0].uri})
+                console.log(media);
+                console.log(media.assets[0].uri);
+                const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+                console.log('priceRecognized: ', priceRecognized);
+                this.setState({result: priceRecognized})
+            }
+        }
+        );
     }
 
-    async onImageSelect(media){
-        if (!media.didCancel) {
-            this.setState({image:media.assets[0].uri})
-            const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-            console.log('priceRecognized: ', priceRecognized);
-            this.setState({result: priceRecognized})
-        }
-    };
+    // async onImageSelect(media){
+    //     if (!media.didCancel) {
+    //         this.setState({image:media.assets[0].uri})
+    //         const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+    //         console.log('priceRecognized: ', priceRecognized);
+    //         this.setState({result: priceRecognized})
+    //     }
+    // };
 
     onProductChange(text) {
         this.setState({product: this.state.prod_ids[text].id});
@@ -221,7 +231,7 @@ export default class Scan extends Component {
                     <Text style={styles.loginText} onPress={() => this.handleScan()}>Add scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => this.onTakePhoto()}>
+                <TouchableOpacity style={styles.button} onPress={this.onTakePhoto}>
                     <Text style={styles.buttonText}>Take Photo</Text>
                 </TouchableOpacity>
 
@@ -273,7 +283,13 @@ const styles = StyleSheet.create({
     },
     loginText: {
         color: "#ceecf9"
-    }
+    },
+    image: {
+        height: 300,
+        width: 300,
+        marginTop: 30,
+        borderRadius: 10,
+    },
 });
 
 
