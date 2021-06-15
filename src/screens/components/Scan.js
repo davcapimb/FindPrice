@@ -101,8 +101,8 @@ export default class Scan extends Component {
     }
 
     onTakePrice(){
-        const reg1 = /[\$\£\€]+\d+(?:[\.\,]\d{1,2})/;
-        const reg2 = /[\$\£\€]*\d+(?:[\.\,]\d{1,2})/;
+        const reg1 = /[\$\£\€]+\s*\d+(?:[\.\,]\d{1,2})/;
+        const reg2 = /[\$\£\€]*\s*\d+(?:[\.\,]\d{1,2})/;
         var current_price="";
         var temp='';
         this.state.result.map((box)=>{
@@ -120,20 +120,15 @@ export default class Scan extends Component {
                     current_price=box.blockText.match(reg2);
                     console.log(current_price);
                 }
-
-
             })
         }
         console.log('current price', current_price);
-        this.setState({price:current_price})
+        current_price[0] = current_price[0].replace(/,/g,'.');
+        current_price[0] = current_price[0].replace(/[\$\£\€]/g,'');
+        this.setState({price:current_price[0]})
         this.priceInput.setNativeProps({text: current_price[0]})
         return (current_price)
-
-
-
     }
-
-
 
     onProductChange(text) {
         this.setState({product: this.state.prod_ids[text].id});
@@ -161,7 +156,6 @@ export default class Scan extends Component {
 
     render() {
 
-
         return (
             <View style={styles.container}>
                 {/*<LOGO width="130" height="130"/>*/}
@@ -175,10 +169,10 @@ export default class Scan extends Component {
                         }}
                         options={this.state.options}
                         onSelect={this.onProductChange.bind(this)}
-                        dropdownTextStyle={style.dropdownTextStyle}
-                        textStyle={style.textStyle}
-                        dropdownStyle={style.dropdownStyle}
-                        style={style.styledrop}
+                        dropdownTextStyle={styles.dropdownTextStyle}
+                        textStyle={styles.textStyle}
+                        dropdownStyle={styles.dropdownStyle}
+                        style={styles.styledrop}
                     />
                 </View>
                 <View style={styles.inputView}>
