@@ -2,17 +2,7 @@ import React, {Component} from "react";
 import {Alert, Button, FlatList, Image, SafeAreaView, StyleSheet, Text} from "react-native";
 import axios from "axios";
 import {BackHandler} from "react-native";
-const showAlert = (err, msg) =>
-    Alert.alert(
-        "Error " + err,
-        msg,
-        [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-        ],
-    );
+import {showAlert} from "../../Utils";
 
 class ListView extends Component {
     constructor(props) {

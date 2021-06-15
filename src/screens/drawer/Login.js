@@ -1,20 +1,8 @@
 import React, {Component} from "react";
-import {StyleSheet, View, TextInput, Button, Text, Alert, TouchableOpacity} from "react-native";
+import {StyleSheet, View, TextInput, Text, TouchableOpacity} from "react-native";
 import axios from "axios";
+import {showAlert} from "../../Utils";
 
-const showAlert = (err, msg) =>
-    Alert.alert(
-        "Error " + err,
-        msg,
-        [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-        ],
-    );
-
-// import {ActionConst} from "react-native-router-flux";
 class Login extends Component {
     state = {
         username: "",

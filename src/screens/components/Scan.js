@@ -1,16 +1,11 @@
 import React, {Component, useState} from "react";
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-// import * as ImagePicker from "react-native-image-picker";
-import {Alert, Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
+import {Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import axios from "axios";
 import ModalDropdown from "react-native-modal-dropdown";
 import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
-
-const showAlert = (err, msg) =>
-    Alert.alert("Error " + err, msg,[{text: "Cancel",style: "cancel",},],);
-
-
+import {showAlert} from "../../Utils";
 
 export default class Scan extends Component {
     state = {
@@ -180,30 +175,10 @@ export default class Scan extends Component {
                         }}
                         options={this.state.options}
                         onSelect={this.onProductChange.bind(this)}
-                        dropdownTextStyle={{
-                            backgroundColor: '#fff',
-                            fontSize: 18,
-                            color: '#000000'
-                        }}/*Style here*/
-                        textStyle={{
-                            fontSize: 18,
-                            color: '#8D918D',
-                            alignSelf: 'flex-start',
-                            marginLeft: 10
-                        }}
-                        dropdownStyle={{
-                            flex: 1,
-                            width: '90%',
-                            marginVertical: 10,
-                            borderWidth: 1,
-                            borderColor: '#D3D3D3'
-                        }}
-                        style={{
-                            flex: 1,
-                            width: '100%',
-                            backgroundColor: '#FFFFFF',
-                            justifyContent: 'center'
-                        }}
+                        dropdownTextStyle={style.dropdownTextStyle}
+                        textStyle={style.textStyle}
+                        dropdownStyle={style.dropdownStyle}
+                        style={style.styledrop}
                     />
                 </View>
                 <View style={styles.inputView}>
@@ -282,6 +257,30 @@ const styles = StyleSheet.create({
         width: 300,
         marginTop: 30,
         borderRadius: 10,
+    },
+    dropdownTextStyle: {
+        backgroundColor: '#fff',
+        fontSize: 18,
+        color: '#000000'
+    },
+    textStyle: {
+        fontSize: 18,
+        color: '#8D918D',
+        alignSelf: 'flex-start',
+        marginLeft: 10
+    },
+    dropdownStyle: {
+        flex: 1,
+        width: '90%',
+        marginVertical: 10,
+        borderWidth: 1,
+        borderColor: '#D3D3D3'
+    },
+    styledrop: {
+        flex: 1,
+        width: '100%',
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center'
     },
 });
 

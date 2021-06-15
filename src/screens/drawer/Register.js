@@ -1,18 +1,7 @@
 import React, {Component} from "react";
-import {StyleSheet, View, Text, TextInput, Button, Alert} from "react-native";
+import {StyleSheet, View, Text, TextInput, Button} from "react-native";
 import axios from "axios";
-
-const showAlert = (err, msg) =>
-    Alert.alert(
-        "Error " + err,
-        msg,
-        [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-        ],
-    );
+import {showAlert} from "../../Utils";
 
 class Register extends Component {
     state = {

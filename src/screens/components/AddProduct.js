@@ -1,20 +1,9 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import axios from "axios";
-import {Alert,  StyleSheet, Text, TextInput, View, TouchableHighlight} from "react-native";
+import {StyleSheet, Text, TextInput, View} from "react-native";
 import ModalDropdown from 'react-native-modal-dropdown';
 import { Icon, Button } from 'react-native-elements'
-
-const showAlert = (err, msg) =>
-    Alert.alert(
-        "Error " + err,
-        msg,
-        [
-            {
-                text: "Cancel",
-                style: "cancel",
-            },
-        ],
-    );
+import {showAlert} from "../../Utils";
 
 class AddProduct extends Component {
     state = {
@@ -51,7 +40,6 @@ class AddProduct extends Component {
         this.setState({description: text});
     }
 
-
     handleAddProduct() {
         const payload = {
             product_name: this.state.product_name,
@@ -60,6 +48,8 @@ class AddProduct extends Component {
         }
         axios.post('api/v1/products/', payload)
             .then(response => {
+                this.descInput.clear();
+                this.prodInput.clear();
                 this.props.navigation.navigate("AddProduct");
             })
             .catch(error => {
@@ -72,12 +62,9 @@ class AddProduct extends Component {
     render() {
         const {
             formContainerStyle,
-            fieldStyle,
             textInputStyle,
             buttonContainerStyle,
-            container,
         } = style;
-
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -88,6 +75,9 @@ class AddProduct extends Component {
                             autoCorrect={false}
                             autoCapitalize="none"
                             style={textInputStyle}
+                            ref={input => {
+                                this.prodInput = input
+                            }}
                             onChangeText={this.onProductNameChange.bind(this)}
                         />
                     </View>
@@ -98,11 +88,13 @@ class AddProduct extends Component {
                             autoCorrect={false}
                             placeholder="Description"
                             style={textInputStyle}
+                            ref={input => {
+                                this.descInput = input
+                            }}
                             onChangeText={this.onDescriptionChange.bind(this)}
                         />
                     </View>
                     <View style={style.viewStyle}>
-                        <Text style={style.textStyle}>{'Category'}</Text>
                         <View style={style.input}>
 
                             {/*<Image*/}
@@ -111,37 +103,17 @@ class AddProduct extends Component {
                             {/*/>*/}
 
                             <ModalDropdown
-                                placeholder="Select a category"
+                                defaultValue="Select a category"
 
                                 onSelect={(index, value) => {
                                     this.setState({selected: value})
                                 }}
                                 options={this.state.options}
                                 onSelect={this.onCategoryChange.bind(this)}
-                                dropdownTextStyle={{
-                                    backgroundColor: '#fff',
-                                    fontSize: 18,
-                                    color: '#000000'
-                                }}/*Style here*/
-                                textStyle={{
-                                    fontSize: 18,
-                                    color: '#8D918D',
-                                    alignSelf: 'flex-start',
-                                    marginLeft: 10
-                                }}
-                                dropdownStyle={{
-                                    flex: 1,
-                                    width: '90%',
-                                    marginVertical: 10,
-                                    borderWidth: 1,
-                                    borderColor: '#D3D3D3'
-                                }}
-                                style={{
-                                    flex: 1,
-                                    width: '100%',
-                                    backgroundColor: '#FFFFFF',
-                                    justifyContent: 'center'
-                                }}
+                                dropdownTextStyle={style.dropdownTextStyle}
+                                textStyle={style.textStyle}
+                                dropdownStyle={style.dropdownStyle}
+                                style={style.styledrop}
                             />
                             <Icon name='label' />
                         </View>
@@ -221,18 +193,29 @@ const style = StyleSheet.create({
         flex: 1,
         borderWidth: StyleSheet.hairlineWidth,
     },
-    dropdown_1: {
-        flex: 1,
-        top: 32,
-        left: 8,
+    dropdownTextStyle: {
+        backgroundColor: '#fff',
+        fontSize: 18,
+        color: '#000000'
     },
-    dropdown_6: {
-        flex: 1,
-        left: 8,
+    textStyle: {
+        fontSize: 18,
+        color: '#8D918D',
+        alignSelf: 'flex-start',
+        marginLeft: 10
     },
-    dropdown_6_image: {
-        width: 40,
-        height: 40,
+    dropdownStyle: {
+        flex: 1,
+        width: '90%',
+        marginVertical: 10,
+        borderWidth: 1,
+        borderColor: '#D3D3D3'
+    },
+    styledrop: {
+        flex: 1,
+        width: '100%',
+        backgroundColor: '#FFFFFF',
+        justifyContent: 'center'
     },
     // container: {
     //     flex: 1,
