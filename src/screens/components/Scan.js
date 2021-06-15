@@ -1,5 +1,5 @@
 import React, {Component, useState} from "react";
-import {launchCamera} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 // import * as ImagePicker from "react-native-image-picker";
 import {Alert, Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import axios from "axios";
@@ -10,26 +10,7 @@ import RNMlKit from 'react-native-firebase-mlkit';
 const showAlert = (err, msg) =>
     Alert.alert("Error " + err, msg,[{text: "Cancel",style: "cancel",},],);
 
-// const camera = () => {
-//     const [image, setImage] = useState();
-//     const [result, setResult] = useState({});
-//
-//     const onTakePhoto = () => launchCamera({mediaType: 'image'}, onImageSelect);
-//
-//
-//     const onImageSelect = async media => {
-//         if (!media.didCancel) {
-//             setImage(media.assets[0].uri);
-//             // const processingResult =
-//             //   await vision().cloudDocumentTextRecognizerProcessImage(media.assets[0].uri);
-//             const deviceTextRecognition = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-//             console.log('Text Recognition On-Device', deviceTextRecognition);
-//             // console.log(processingResult);
-//             setResult(deviceTextRecognition);
-//         }
-//     };
-//     return onTakePhoto();
-// }
+
 
 export default class Scan extends Component {
     state = {
@@ -40,7 +21,7 @@ export default class Scan extends Component {
         prod_ids: [],
         options: [],
         image:'',
-        result:''
+        result:[],
     }
 
     componentDidMount() {
@@ -98,41 +79,11 @@ export default class Scan extends Component {
         })();
     };
 
-    // cameraLaunch(){
-    // let options = {
-    //   storageOptions: {
-    //     skipBackup: true,
-    //     path: 'images',
-    //   },
-    // };
-    // launchCamera(options, (res) => {
-    //   console.log('Response = ', res);
-    //
-    //   if (res.didCancel) {
-    //     console.log('User cancelled image picker');
-    //   } else if (res.error) {
-    //     console.log('ImagePicker Error: ', res.error);
-    //   } else if (res.customButton) {
-    //     console.log('User tapped custom button: ', res.customButton);
-    //     alert(res.customButton);
-    //   } else {
-    //     const source = { uri: res.uri };
-    //     console.log('response', JSON.stringify(res));
-    //     // this.setState({
-    //     //   filePath: res,
-    //     //   fileData: res.data,
-    //     //   fileUri: res.uri
-    //     // });
-    //   }
-    // });
-// }
 
     onTakePhoto= () => {
         launchCamera({mediaType: 'image'}, async (media) => {
             if (!media.didCancel) {
                 this.setState({image:media.assets[0].uri})
-                console.log(media);
-                console.log(media.assets[0].uri);
                 const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
                 console.log('priceRecognized: ', priceRecognized);
                 this.setState({result: priceRecognized})
@@ -141,14 +92,53 @@ export default class Scan extends Component {
         );
     }
 
-    // async onImageSelect(media){
-    //     if (!media.didCancel) {
-    //         this.setState({image:media.assets[0].uri})
-    //         const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-    //         console.log('priceRecognized: ', priceRecognized);
-    //         this.setState({result: priceRecognized})
-    //     }
-    // };
+      onSelectImage= () => {
+        launchImageLibrary({mediaType: 'image'}, async (media) => {
+            if (!media.didCancel) {
+                this.setState({image:media.assets[0].uri})
+                const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+                console.log('priceRecognized: ', priceRecognized);
+                this.setState({result: priceRecognized})
+                await this.onTakePrice();
+            }
+        }
+        );
+    }
+
+    onTakePrice(){
+        const reg1 = /[\$\£\€]+\d+(?:[\.\,]\d{1,2})/;
+        const reg2 = /[\$\£\€]*\d+(?:[\.\,]\d{1,2})/;
+        var current_price="";
+        var temp='';
+        this.state.result.map((box)=>{
+                temp=box.blockText.match(reg1);
+                if(temp!=undefined) {
+                    current_price=box.blockText.match(reg1)
+                    console.log(current_price);
+
+                }
+            })
+        if (current_price===''){
+            this.state.result.map((box)=>{
+                temp=box.blockText.match(reg2);
+                if(temp!=undefined){
+                    current_price=box.blockText.match(reg2);
+                    console.log(current_price);
+                }
+
+
+            })
+        }
+        console.log('current price', current_price);
+        this.setState({price:current_price})
+        this.priceInput.setNativeProps({text: current_price[0]})
+        return (current_price)
+
+
+
+    }
+
+
 
     onProductChange(text) {
         this.setState({product: this.state.prod_ids[text].id});
@@ -163,8 +153,6 @@ export default class Scan extends Component {
         const payload = {product: this.state.product, price: this.state.price, lat: this.state.lat, long: this.state.long}
         axios.post('api/v1/scans/', payload)
             .then(response => {
-
-                this.passInput.clear();
                 this.props.navigation.navigate("Draw");
 
             })
@@ -173,6 +161,8 @@ export default class Scan extends Component {
                 }
             );
     }
+
+
 
     render() {
 
@@ -222,7 +212,7 @@ export default class Scan extends Component {
                         placeholder="Price"
                         placeholderTextColor="#003f5c"
                         ref={input => {
-                            this.passInput = input
+                            this.priceInput = input
                         }}
                         onChangeText={this.onPriceChange.bind(this)}
                     />
@@ -231,8 +221,11 @@ export default class Scan extends Component {
                     <Text style={styles.loginText} onPress={() => this.handleScan()}>Add scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={this.onTakePhoto}>
+                <TouchableOpacity style={styles.button} onPress={() => this.onTakePhoto()}>
                     <Text style={styles.buttonText}>Take Photo</Text>
+                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button} onPress={() => this.onSelectImage()}>
+                    <Text style={styles.buttonText}>Take Image</Text>
                 </TouchableOpacity>
 
             </View>
