@@ -3,6 +3,7 @@ import {Alert, Button, FlatList, Image, SafeAreaView, StyleSheet, Text} from "re
 import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";
+import MapView from 'react-native-maps';
 
 class ListView extends Component {
     constructor(props) {
@@ -51,6 +52,7 @@ class ListView extends Component {
                             uri: "https://bit.ly/book-pizza",
                         }}
                     />
+
                     <Text style={styles.baseText}>FindPrice App</Text>
                     <Text style={styles.newText}>{mytext}</Text>
                     <FlatList

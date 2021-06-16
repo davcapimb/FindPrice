@@ -45,36 +45,17 @@ export default class App extends Component {
         }
     }
 
-    renderTabComponents = () => (
-        <Tab.Navigator>
-
-            <Tab.Screen name="Tab 1" component={TabOne}/>
-            <Tab.Screen name="Tab 2" component={TabTwo}/>
-        </Tab.Navigator>
-    );
-
-    renderScreenComponents = () => (
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Home">
-                {props => <ListView {...props} isAuthenticated={this.state.isAuthenticated}/>}
-            </Stack.Screen>
-
-            <Stack.Screen name="Draw">
-                {() => this.renderDrawerComponents()}
-            </Stack.Screen>
-            <Stack.Screen name="AddProduct">
-                {props => <AddProduct{...props} />}
-            </Stack.Screen>
-            <Stack.Screen name="Login">
-                {props => <Login {...props} auth={this.auth}/>}
-            </Stack.Screen>
-
-            <Stack.Screen name="Register">
-                {props => <Register{...props} />}
-            </Stack.Screen>
-        </Stack.Navigator>
-
-    );
+    renderTabComponents = () => {
+        return (
+            <Tab.Navigator>
+                <Tab.Screen name="Home" >
+                    {props => <ListView {...props} isAuthenticated={this.state.isAuthenticated}/>}
+                </Tab.Screen>
+                <Tab.Screen name="Tab 2" component={TabTwo}/>
+                <Tab.Screen name="Tab 1" component={TabOne}/>
+            </Tab.Navigator>
+        );
+    }
 
 
     renderDrawerComponents = () => {
@@ -83,6 +64,9 @@ export default class App extends Component {
                 backgroundColor: '#c6cbef',
                 width: 180,
             }}>
+                <Drawer.Screen name="Tab">
+                    {() => this.renderTabComponents()}
+                </Drawer.Screen>
                 <Drawer.Screen name="Home">
                     {props => <ListView {...props} isAuthenticated={this.state.isAuthenticated}/>}
                 </Drawer.Screen>
@@ -90,6 +74,7 @@ export default class App extends Component {
                 <Drawer.Screen name="Logout">
                     {props => <Logout {...props} auth={this.auth}/>}
                 </Drawer.Screen>
+
             </Drawer.Navigator>
         );
     }
@@ -130,6 +115,9 @@ export default class App extends Component {
                         {props => <Register{...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
+                <Stack.Screen name="Tab">
+                        {() => this.renderTabComponents()}
+                    </Stack.Screen>
 
             </NavigationContainer>
         );
