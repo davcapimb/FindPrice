@@ -9,7 +9,7 @@ import Register from "./src/screens/drawer/Register.js";
 import Logout from "./src/screens/drawer/Logout.js";
 import Scan from "./src/screens/components/Scan.js";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import TabOne from "./src/screens/tabs/tab1.js";
+import Map from "./src/screens/tabs/Map.js";
 import TabTwo from "./src/screens/tabs/tab2.js";
 import axios from "axios";
 import {SafeAreaView} from 'react-navigation';
@@ -52,7 +52,7 @@ export default class App extends Component {
                     {props => <ListView {...props} isAuthenticated={this.state.isAuthenticated}/>}
                 </Tab.Screen>
                 <Tab.Screen name="Tab 2" component={TabTwo}/>
-                <Tab.Screen name="Tab 1" component={TabOne}/>
+                <Tab.Screen name="Map" component={Map}/>
             </Tab.Navigator>
         );
     }
@@ -85,7 +85,7 @@ export default class App extends Component {
 
 
     render() {
-        axios.defaults.baseURL = 'http://10.0.2.2:8000/';
+        axios.defaults.baseURL = 'http://192.168.1.104:8000/';
         axios.defaults.timeout = 1500;
         sessionCheck(this.auth);
         return (
