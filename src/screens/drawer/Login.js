@@ -47,7 +47,6 @@ class Login extends Component {
                 this.passInput.clear();
                 (async ()=>{await AsyncStorage.setItem("id_token",token)
                     this.props.navigation.navigate("Draw");})()
-                // this.props.navigation.navigate("Draw");
 
             })
             .catch(error => {
