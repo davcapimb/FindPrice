@@ -8,6 +8,7 @@ import Login from "./src/screens/drawer/Login.js";
 import Register from "./src/screens/drawer/Register.js";
 import Logout from "./src/screens/drawer/Logout.js";
 import Scan from "./src/screens/components/Scan.js";
+import HomeScreen from "./src/screens/Home/HomeScreen";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Map from "./src/screens/tabs/Map.js";
 import TabTwo from "./src/screens/tabs/tab2.js";
@@ -20,20 +21,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-// function sessionCheck(auth) {
-//     axios.get('api/v1/users/me')
-//         .then(response => {
-//             const username = response.data.username;
-//             if (response.text !== undefined) {
-//                 auth(true);
-//             }
-//         })
-//         .catch(error => {
-//                 console.log(error);
-//             }
-//         );
-// }
-// ;
 
 export default class App extends Component {
     constructor(props) {
@@ -76,6 +63,7 @@ export default class App extends Component {
                 <Drawer.Screen name="Logout">
                     {props => <Logout {...props} auth={this.auth}/>}
                 </Drawer.Screen>
+                <Drawer.Screen name="HomeScreen" component={HomeScreen}/>
 
             </Drawer.Navigator>
         );
@@ -87,9 +75,8 @@ export default class App extends Component {
 
 
     render() {
-        axios.defaults.baseURL = 'http://192.168.1.246:8000/';
+        axios.defaults.baseURL = 'http://192.168.1.104:8000/';
         axios.defaults.timeout = 1500;
-        // sessionCheck(this.auth);
         return (
             <NavigationContainer>
 
@@ -115,6 +102,9 @@ export default class App extends Component {
 
                     <Stack.Screen name="Register">
                         {props => <Register{...props} />}
+                    </Stack.Screen>
+                    <Stack.Screen name="HomeScreen">
+                        {props => <HomeScreen{...props} />}
                     </Stack.Screen>
                 </Stack.Navigator>
                 <Stack.Screen name="Tab">
