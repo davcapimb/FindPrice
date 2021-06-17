@@ -13,27 +13,27 @@ import Map from "./src/screens/tabs/Map.js";
 import TabTwo from "./src/screens/tabs/tab2.js";
 import axios from "axios";
 import {SafeAreaView} from 'react-navigation';
-import {Button, TouchableOpacity, ScrollView, Text, StyleSheet} from "react-native";
+import {Button, TouchableOpacity, ScrollView, Text, StyleSheet} from 'react-native';
 import AddProduct from "./src/screens/components/AddProduct";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-function sessionCheck(auth) {
-    axios.get('api/v1/users/me')
-        .then(response => {
-            const username = response.data.username;
-            if (response.text !== undefined) {
-                auth(true);
-            }
-        })
-        .catch(error => {
-                console.log(error);
-            }
-        );
-}
-;
+// function sessionCheck(auth) {
+//     axios.get('api/v1/users/me')
+//         .then(response => {
+//             const username = response.data.username;
+//             if (response.text !== undefined) {
+//                 auth(true);
+//             }
+//         })
+//         .catch(error => {
+//                 console.log(error);
+//             }
+//         );
+// }
+// ;
 
 export default class App extends Component {
     constructor(props) {
@@ -44,6 +44,8 @@ export default class App extends Component {
             isAuthenticated: false
         }
     }
+
+
 
     renderTabComponents = () => {
         return (
@@ -85,9 +87,9 @@ export default class App extends Component {
 
 
     render() {
-        axios.defaults.baseURL = 'http://192.168.1.104:8000/';
+        axios.defaults.baseURL = 'http://192.168.1.246:8000/';
         axios.defaults.timeout = 1500;
-        sessionCheck(this.auth);
+        // sessionCheck(this.auth);
         return (
             <NavigationContainer>
 

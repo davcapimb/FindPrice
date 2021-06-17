@@ -2,12 +2,27 @@ import React, {Component} from "react";
 import {StyleSheet, View, TextInput, Text, TouchableOpacity} from "react-native";
 import axios from "axios";
 import {showAlert} from "../../Utils";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Login extends Component {
     state = {
         username: "",
         password: "",
         isAuthenticated: false
+    }
+
+            componentDidMount() {
+        (async ()=>{
+         let token = await AsyncStorage.getItem("id_token")
+        if(token){
+            await AsyncStorage.setItem("id_token",token)
+            this.props.auth(true);
+            axios.defaults.headers.common['Authorization'] = 'Token ' + token;
+            this.props.navigation.navigate("Draw");
+   }
+        else return null;
+        })()
+
     }
 
 
@@ -30,7 +45,9 @@ class Login extends Component {
                 this.props.auth(true);
                 // this.userInput.clear();
                 this.passInput.clear();
-                this.props.navigation.navigate("Draw");
+                (async ()=>{await AsyncStorage.setItem("id_token",token)
+                    this.props.navigation.navigate("Draw");})()
+                // this.props.navigation.navigate("Draw");
 
             })
             .catch(error => {
