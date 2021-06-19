@@ -3,7 +3,7 @@ import {StyleSheet, View, TextInput, Text, TouchableOpacity} from "react-native"
 import axios from "axios";
 import {showAlert} from "../../Utils";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {styleLogin} from './styles';
 class Login extends Component {
     state = {
         username: "",
@@ -58,11 +58,11 @@ class Login extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
-                <Text style={styles.logo}>FindPrice</Text>
-                <View style={styles.inputView}>
+            <View style={styleLogin.container}>
+                <Text style={styleLogin.logo}>FindPrice</Text>
+                <View style={styleLogin.inputView}>
                     <TextInput
-                        style={styles.inputText}
+                        style={styleLogin.inputText}
                         autoCapitalize="none"
                         placeholder="Username..."
                         placeholderTextColor="#003f5c"
@@ -74,10 +74,10 @@ class Login extends Component {
                         onChangeText={this.onUsernameChange.bind(this)}
                     />
                 </View>
-                <View style={styles.inputView}>
+                <View style={styleLogin.inputView}>
                     <TextInput
                         secureTextEntry
-                        style={styles.inputText}
+                        style={styleLogin.inputText}
                         placeholder="Password..."
                         placeholderTextColor="#003f5c"
                         ref={input => {
@@ -87,13 +87,13 @@ class Login extends Component {
                     />
                 </View>
                 <TouchableOpacity>
-                    <Text style={styles.forgot}>Forgot Password?</Text>
+                    <Text style={styleLogin.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.loginBtn}>
-                    <Text style={styles.loginText} onPress={() => this.handleLogin()}>LOGIN</Text>
+                <TouchableOpacity style={styleLogin.loginBtn}>
+                    <Text style={styleLogin.loginText} onPress={() => this.handleLogin()}>LOGIN</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
-                    <Text style={styles.loginText}
+                    <Text style={styleLogin.loginText}
                           onPress={() => this.props.navigation.navigate("Register")}>Signup</Text>
                 </TouchableOpacity>
 
@@ -105,50 +105,7 @@ class Login extends Component {
 export default Login;
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#2d333b',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logo: {
-        fontWeight: "bold",
-        fontSize: 50,
-        color: "#bb9d84",
-        marginBottom: 40
-    },
-    inputView: {
-        width: "80%",
-        backgroundColor: "#ceecf9",
-        borderRadius: 25,
-        height: 50,
-        marginBottom: 20,
-        justifyContent: "center",
-        padding: 20
-    },
-    inputText: {
-        height: 50,
-        color: "#003f5c"
-    },
-    forgot: {
-        color: "#ceecf9",
-        fontSize: 11
-    },
-    loginBtn: {
-        width: "80%",
-        backgroundColor: "#bb9d84",
-        borderRadius: 25,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 40,
-        marginBottom: 10
-    },
-    loginText: {
-        color: "#ceecf9"
-    }
-});
+
 
 
 

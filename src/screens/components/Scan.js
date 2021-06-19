@@ -6,7 +6,7 @@ import ModalDropdown from "react-native-modal-dropdown";
 import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
 import {showAlert} from "../../Utils";
-
+import {styleScan} from './styles';
 export default class Scan extends Component {
     state = {
         product: '',
@@ -20,6 +20,7 @@ export default class Scan extends Component {
     }
 
     componentDidMount() {
+
         var prods = [];
         var prod_name = [];
         var errorMsg = "";
@@ -157,10 +158,10 @@ export default class Scan extends Component {
     render() {
 
         return (
-            <View style={styles.container}>
+            <View style={styleScan.container}>
                 {/*<LOGO width="130" height="130"/>*/}
-                <Text style={styles.logo}>FindPrice</Text>
-                <View style={styles.inputView}>
+                <Text style={styleScan.logo}>FindPrice</Text>
+                <View style={styleScan.dropdownViewStyle}>
                     <ModalDropdown
                         placeholder="Select a product"
 
@@ -169,15 +170,15 @@ export default class Scan extends Component {
                         }}
                         options={this.state.options}
                         onSelect={this.onProductChange.bind(this)}
-                        dropdownTextStyle={styles.dropdownTextStyle}
-                        textStyle={styles.textStyle}
-                        dropdownStyle={styles.dropdownStyle}
-                        style={styles.styledrop}
+                        dropdownTextStyle={styleScan.dropdownTextStyle}
+                        textStyle={styleScan.textStyle}
+                        dropdownStyle={styleScan.dropdownStyle}
+                        style={styleScan.styledrop}
                     />
                 </View>
-                <View style={styles.inputView}>
+                <View style={styleScan.inputView}>
                     <TextInput
-                        style={styles.inputText}
+                        style={styleScan.inputText}
                         placeholder="Price"
                         placeholderTextColor="#003f5c"
                         ref={input => {
@@ -186,15 +187,15 @@ export default class Scan extends Component {
                         onChangeText={this.onPriceChange.bind(this)}
                     />
                 </View>
-                <TouchableOpacity style={styles.loginBtn}>
-                    <Text style={styles.loginText} onPress={() => this.handleScan()}>Add scan</Text>
+                <TouchableOpacity style={styleScan.loginBtn}>
+                    <Text style={styleScan.loginText} onPress={() => this.handleScan()}>Add scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={() => this.onTakePhoto()}>
-                    <Text style={styles.buttonText}>Take Photo</Text>
+                <TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>
+                    <Text style={styleScan.buttonText}>Take Photo</Text>
                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.button} onPress={() => this.onSelectImage()}>
-                    <Text style={styles.buttonText}>Take Image</Text>
+                                <TouchableOpacity style={styleScan.button} onPress={() => this.onSelectImage()}>
+                    <Text style={styleScan.buttonText}>Take Image</Text>
                 </TouchableOpacity>
 
             </View>
@@ -203,80 +204,7 @@ export default class Scan extends Component {
 }
 
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#2d333b',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    logo: {
-        fontWeight: "bold",
-        fontSize: 50,
-        color: "#bb9d84",
-        marginBottom: 40
-    },
-    inputView: {
-        width: "80%",
-        backgroundColor: "#ceecf9",
-        borderRadius: 25,
-        height: 50,
-        marginBottom: 20,
-        justifyContent: "center",
-        padding: 20
-    },
-    inputText: {
-        height: 50,
-        color: "#003f5c"
-    },
-    forgot: {
-        color: "#ceecf9",
-        fontSize: 11
-    },
-    loginBtn: {
-        width: "80%",
-        backgroundColor: "#bb9d84",
-        borderRadius: 25,
-        height: 50,
-        alignItems: "center",
-        justifyContent: "center",
-        marginTop: 40,
-        marginBottom: 10
-    },
-    loginText: {
-        color: "#ceecf9"
-    },
-    image: {
-        height: 300,
-        width: 300,
-        marginTop: 30,
-        borderRadius: 10,
-    },
-    dropdownTextStyle: {
-        backgroundColor: '#fff',
-        fontSize: 18,
-        color: '#000000'
-    },
-    textStyle: {
-        fontSize: 18,
-        color: '#8D918D',
-        alignSelf: 'flex-start',
-        marginLeft: 10
-    },
-    dropdownStyle: {
-        flex: 1,
-        width: '90%',
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: '#D3D3D3'
-    },
-    styledrop: {
-        flex: 1,
-        width: '100%',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center'
-    },
-});
+
 
 
 

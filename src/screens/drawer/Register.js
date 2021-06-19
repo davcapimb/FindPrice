@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import {StyleSheet, View, Text, TextInput, Button} from "react-native";
+import {StyleSheet, View, Text, TextInput, Button, TouchableOpacity} from 'react-native';
 import axios from "axios";
 import {showAlert} from "../../Utils";
-
+import {styleLogin, styleRegister} from './styles';
 class Register extends Component {
     state = {
         email: "",
@@ -38,100 +38,64 @@ class Register extends Component {
     }
 
     render() {
-        const {
-            formContainerStyle,
-            fieldStyle,
-            textInputStyle,
-            buttonContainerStyle,
-            accountCreateContainerStyle,
-            accountCreateTextStyle
-        } = style;
+
 
 
         return (
-            <View style={{flex: 1, backgroundColor: 'white'}}>
-                <View style={formContainerStyle}>
-                    <View style={fieldStyle}>
-                        <TextInput
-                            placeholder="username"
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            style={textInputStyle}
-                            onChangeText={this.onUsernameChange.bind(this)}
-                        />
-                    </View>
-                    <View style={fieldStyle}>
-                        <TextInput
-                            secureTextEntry
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            placeholder="password"
-                            style={textInputStyle}
-                            onChangeText={this.onPasswordChange.bind(this)}
-                        />
-                    </View>
-                    <View style={fieldStyle}>
-                        <TextInput
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            placeholder="email"
-                            style={textInputStyle}
-                            onChangeText={this.onEmailChange.bind(this)}
-                        />
-                    </View>
+            <View style={styleRegister.container}>
+                <Text style={styleLogin.logo}>FindPrice</Text>
+
+                 <View style={styleLogin.inputView}>
+                    <TextInput
+                        style={styleLogin.inputText}
+                        autoCapitalize="none"
+                        placeholder="Username..."
+                        placeholderTextColor="#003f5c"
+                        clearButtonMode="while-editing"
+                        ref={input => {
+                            this.userInput = input
+                        }}
+
+                        onChangeText={this.onUsernameChange.bind(this)}
+                    />
                 </View>
-                <View style={buttonContainerStyle}>
-                    <Button title='Register' onPress={() => this.handleRegister()}/>
+                                    <View style={styleLogin.inputView}>
+                    <TextInput
+                        secureTextEntry
+                        style={styleLogin.inputText}
+                        placeholder="Password..."
+                        placeholderTextColor="#003f5c"
+                        ref={input => {
+                            this.passInput = input
+                        }}
+                        onChangeText={this.onPasswordChange.bind(this)}
+                    />
                 </View>
-                <View style={accountCreateContainerStyle}>
-                    <Text style={accountCreateTextStyle}>
-                        Already have an account?
-                        <Text style={{color: 'blue'}} onPress={() => this.props.navigation.navigate("Login")}>
-                            {' Login'}
-                        </Text>
-                    </Text>
+                    <View style={styleLogin.inputView}>
+                    <TextInput
+                        style={styleLogin.inputText}
+                        autoCapitalize="none"
+                        placeholder="Email..."
+                        placeholderTextColor="#003f5c"
+                        clearButtonMode="while-editing"
+                        ref={input => {
+                            this.userInput = input
+                        }}
+
+                        onChangeText={this.onUsernameChange.bind(this)}
+                    />
                 </View>
-            </View>
+                <TouchableOpacity style={styleLogin.loginBtn}>
+                    <Text style={styleLogin.loginText} onPress={() => this.handleRegister()}>REGISTER</Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                    <Text style={styleLogin.forgot} onPress={() => this.props.navigation.navigate("Login")}>Already have an account?</Text>
+                </TouchableOpacity>
+
+                </View>
         );
     }
 }
 
 export default Register;
-const style = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    title: {
-        fontSize: 36,
-        marginBottom: 16,
-    },
-    formContainerStyle: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textInputStyle: {
-        flex: 1,
-        padding: 15
-    },
-    fieldStyle: {
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    buttonContainerStyle: {
-        flex: 1,
-        justifyContent: 'center',
-        padding: 25
-    },
-    accountCreateTextStyle: {
-        color: 'black'
-    },
-    accountCreateContainerStyle: {
-        padding: 25,
-        alignItems: 'center'
-    }
 
-});

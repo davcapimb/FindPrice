@@ -4,7 +4,7 @@ import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";
 import MapView from 'react-native-maps';
-
+import {stylelist_view} from './styles';
 class ListView extends Component {
     constructor(props) {
         super(props);
@@ -17,7 +17,6 @@ class ListView extends Component {
         axios.get('api/v1/products')
             .then(response => {
                 this.setState({data: response.data});
-                BackHandler.addEventListener('hardwareBackPress', this.handleBackPress);
 
 
             })
@@ -29,14 +28,6 @@ class ListView extends Component {
 
 
 
-  componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackPress);
-  }
-
-  handleBackPress = () => {
-    this.props.navigation.navigate('Home');
-    return true;
-  };
 
 
     render() {
@@ -45,21 +36,21 @@ class ListView extends Component {
             const mytext = "ciao sono pepps";
             return (
 
-                <SafeAreaView style={styles.center}>
+                <SafeAreaView style={stylelist_view.center}>
                     <Image
-                        style={styles.pizzaImage}
+                        style={stylelist_view.pizzaImage}
                         source={{
                             uri: "https://bit.ly/book-pizza",
                         }}
                     />
 
-                    <Text style={styles.baseText}>FindPrice App</Text>
-                    <Text style={styles.newText}>{mytext}</Text>
+                    <Text style={stylelist_view.baseText}>FindPrice App</Text>
+                    <Text style={stylelist_view.newText}>{mytext}</Text>
                     <FlatList
                         data={data}
                         keyExtractor={(item) => item.id.toString()}
                         renderItem={({item}) => (
-                            <Text style={styles.itemText}>
+                            <Text style={stylelist_view.itemText}>
                                 {item.product_name}, {item.category}
                             </Text>
                         )}
@@ -72,7 +63,7 @@ class ListView extends Component {
             );
         } else {
             return (
-                <Text style={styles.newText}>No auth</Text>
+                <Text style={stylelist_view.newText}>No auth</Text>
             );
         }
 
@@ -82,30 +73,3 @@ class ListView extends Component {
 export default ListView;
 
 
-const styles = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    title: {
-        fontSize: 36,
-        marginBottom: 16,
-    },
-    baseText: {
-        color: "navy",
-        fontSize: 30,
-        fontStyle: "italic",
-    },
-    newText: {
-        color: "red",
-    },
-    pizzaImage: {
-        width: 200,
-        height: 200,
-    },
-    itemText: {
-        color: "green",
-        fontSize: 20,
-    }
-});

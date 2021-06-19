@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import axios from "axios";
-import {StyleSheet, Text, TextInput, View} from "react-native";
+import {Text, TextInput, View} from "react-native";
 import ModalDropdown from 'react-native-modal-dropdown';
 import { Icon, Button } from 'react-native-elements'
 import {showAlert} from "../../Utils";
-
+import {styleAddProduct} from './styles';
 class AddProduct extends Component {
     state = {
         product_name: "",
@@ -64,12 +64,12 @@ class AddProduct extends Component {
             formContainerStyle,
             textInputStyle,
             buttonContainerStyle,
-        } = style;
+        } = styleAddProduct;
 
         return (
             <View style={{flex: 1, backgroundColor: 'white'}}>
                 <View style={formContainerStyle}>
-                    <View style={style.input}>
+                    <View style={styleAddProduct.input}>
                         <TextInput
                             placeholder="Product Name"
                             autoCorrect={false}
@@ -82,7 +82,7 @@ class AddProduct extends Component {
                         />
                     </View>
 
-                    <View style={style.input}>
+                    <View style={styleAddProduct.input}>
                         <TextInput
                             autoCapitalize="none"
                             autoCorrect={false}
@@ -94,8 +94,8 @@ class AddProduct extends Component {
                             onChangeText={this.onDescriptionChange.bind(this)}
                         />
                     </View>
-                    <View style={style.viewStyle}>
-                        <View style={style.input}>
+                    <View style={styleAddProduct.viewStyle}>
+                        <View style={styleAddProduct.input}>
 
                             {/*<Image*/}
                             {/*    style={style.mapIcon}*/}
@@ -110,10 +110,10 @@ class AddProduct extends Component {
                                 }}
                                 options={this.state.options}
                                 onSelect={this.onCategoryChange.bind(this)}
-                                dropdownTextStyle={style.dropdownTextStyle}
-                                textStyle={style.textStyle}
-                                dropdownStyle={style.dropdownStyle}
-                                style={style.styledrop}
+                                dropdownTextStyle={styleAddProduct.dropdownTextStyle}
+                                textStyle={styleAddProduct.textStyle}
+                                dropdownStyle={styleAddProduct.dropdownStyle}
+                                style={styleAddProduct.styledrop}
                             />
                             <Icon name='label' />
                         </View>
@@ -143,107 +143,5 @@ class AddProduct extends Component {
 
 export default AddProduct;
 
-const style = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    row: {
-        flex: 1,
-        flexDirection: 'row',
-    },
-    title: {
-        fontSize: 36,
-        marginBottom: 16,
-    },
-    formContainerStyle: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    textInputStyle: {
-        flex: 1,
-        padding: 15
-    },
-    fieldStyle: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center'
-    },
-    buttonContainerStyle: {
-        flex: 1,
-        justifyContent: 'center',
-        padding: 25
-    },
-    accountCreateTextStyle: {
-        color: 'black'
-    },
-    accountCreateContainerStyle: {
-        padding: 25,
-        alignItems: 'center'
-    },
-    container: {
-        flex: 1,
-        color: "black",
-        alignItems: "center"
-    },
-    cell: {
-        flex: 1,
-        borderWidth: StyleSheet.hairlineWidth,
-    },
-    dropdownTextStyle: {
-        backgroundColor: '#fff',
-        fontSize: 18,
-        color: '#000000'
-    },
-    textStyle: {
-        fontSize: 18,
-        color: '#8D918D',
-        alignSelf: 'flex-start',
-        marginLeft: 10
-    },
-    dropdownStyle: {
-        flex: 1,
-        width: '90%',
-        marginVertical: 10,
-        borderWidth: 1,
-        borderColor: '#D3D3D3'
-    },
-    styledrop: {
-        flex: 1,
-        width: '100%',
-        backgroundColor: '#FFFFFF',
-        justifyContent: 'center'
-    },
-    // container: {
-    //     flex: 1,
-    //     backgroundColor: '#FFFFFF',
-    // },
 
-    viewStyle: {
-        margin: 10,
-    },
-
-    input: {
-        height: 50,
-        width: '100%',
-        marginTop: 8,
-        borderRadius: 2,
-        borderColor: '#FFFFFF',
-        fontSize: 20,
-        borderWidth: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    iconStyle: {
-        margin: 20,
-        alignSelf: 'flex-end'
-    },
-    mapIcon: {
-        margin: 10,
-        alignSelf: 'center',
-    },
-});
 
