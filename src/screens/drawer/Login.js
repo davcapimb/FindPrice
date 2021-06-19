@@ -18,7 +18,7 @@ class Login extends Component {
             await AsyncStorage.setItem("id_token",token)
             this.props.auth(true);
             axios.defaults.headers.common['Authorization'] = 'Token ' + token;
-            this.props.navigation.navigate("Draw");
+            this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});
    }
         else return null;
         })()
@@ -46,7 +46,7 @@ class Login extends Component {
                 // this.userInput.clear();
                 this.passInput.clear();
                 (async ()=>{await AsyncStorage.setItem("id_token",token)
-                    this.props.navigation.navigate("Draw");})()
+                    this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});})()
 
             })
             .catch(error => {
@@ -56,7 +56,6 @@ class Login extends Component {
     }
 
     render() {
-
         return (
             <View style={styleLogin.container}>
                 <Text style={styleLogin.logo}>FindPrice</Text>

@@ -78,7 +78,8 @@ export default class App extends Component {
     renderDrawerComponents = () => {
         return (
             <Drawer.Navigator drawerStyle={{
-                backgroundColor: '#c6cbef',
+                backgroundColor: '#bb9d84',
+                opacity:0.8,
                 width: 180,
             }}>
                 <Drawer.Screen name="Tab">
