@@ -36,6 +36,7 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
+
         (async ()=>{
             let token = await AsyncStorage.getItem("id_token")
             if(token){
@@ -47,7 +48,6 @@ export default class HomeScreen extends React.Component {
                 this.props.navigation.navigate("Login")
             }
         })()
-        BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
 
     }
     handleBackButton = () => {

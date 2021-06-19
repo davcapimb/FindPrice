@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Alert, Button, FlatList, Image, SafeAreaView, StyleSheet, Text} from "react-native";
+import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View} from "react-native";
 import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";

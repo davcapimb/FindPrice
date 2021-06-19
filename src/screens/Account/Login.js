@@ -56,6 +56,7 @@ class Login extends Component {
     }
 
     render() {
+        this.state.focused=true;
         return (
             <View style={styleLogin.container}>
                 <Text style={styleLogin.logo}>FindPrice</Text>
@@ -101,7 +102,6 @@ class Login extends Component {
     }
 }
 
-export default Login;
 
 
 

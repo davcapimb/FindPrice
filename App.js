@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import ListView from './src/screens/components/list_view';
+import ListView from './src/screens/components/ListView';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import DetailView from './src/screens/components/detail_view';
+import DetailView from './src/screens/components/DetailView';
 import {createDrawerNavigator, DrawerItem, DrawerItemList, DrawerView} from '@react-navigation/drawer';
-import Login from './src/screens/drawer/Login.js';
-import Register from './src/screens/drawer/Register.js';
-import Logout from './src/screens/drawer/Logout.js';
+import Login from './src/screens/Account/Login.js';
+import Register from './src/screens/Account/Register.js';
+import Logout from './src/screens/Account/Logout.js';
 import Scan from './src/screens/components/Scan.js';
 import HomeScreen from './src/screens/Home/HomeScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -118,7 +118,7 @@ export default class App extends Component {
                     </Stack.Screen>
 
                     <Stack.Screen name="Login">
-                        {props => <Login {...props} auth={this.auth}/>}
+                        {props => <Login {...props} />}
                     </Stack.Screen>
 
                     <Stack.Screen name="ListView">
