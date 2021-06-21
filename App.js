@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ListView from './src/screens/components/ListView';
+import CategoryView from './src/screens/components/CategoryView';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import DetailView from './src/screens/components/DetailView';
@@ -86,7 +86,7 @@ export default class App extends Component {
                     {() => this.renderTabComponents()}
                 </Drawer.Screen>
                 <Drawer.Screen name="ListView">
-                    {props => <ListView {...props} />}
+                    {props => <CategoryView {...props} />}
                 </Drawer.Screen>
                 <Drawer.Screen name="New scan" component={Scan}/>
                 <Drawer.Screen name="Logout">
@@ -122,7 +122,7 @@ export default class App extends Component {
                     </Stack.Screen>
 
                     <Stack.Screen name="ListView">
-                        {props => <ListView {...props} />}
+                        {props => <CategoryView {...props} />}
                     </Stack.Screen>
 
                     <Stack.Screen name="AddProduct">
