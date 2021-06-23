@@ -13,6 +13,7 @@ export default class ProductsView extends Component {
     this.state={
         products:[],
         search: '',
+        matches:[]
     }
   }
 
@@ -31,7 +32,8 @@ export default class ProductsView extends Component {
                   );
               })
               this.setState({products: prods})
-              console.log(this.state.products)
+              this.setState({matches: this.state.products});
+
           })
           .catch(error => {
                   for (const keys of Object.keys(error.response.data)){
@@ -60,7 +62,7 @@ export default class ProductsView extends Component {
         let match = [];
         let substring;
         this.setState({search});
-        this.state.options.map((option) => {
+        this.state.products.map((option) => {
             substring = option.name.substring(0, search.length);
 
             if (substring === search.toLowerCase()) {
@@ -105,7 +107,7 @@ export default class ProductsView extends Component {
                     // autoCapitalize={}
                 />
                 <FlatList
-                  data={this.state.products}
+                  data={this.state.matches}
                   renderItem={this.renderProduct}
                   keyExtractor={item => `${item.id}`}
                 />
