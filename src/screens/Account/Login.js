@@ -1,30 +1,58 @@
 import React, {Component} from "react";
-import {StyleSheet, View, TextInput, Text, TouchableOpacity} from "react-native";
+import {StyleSheet, View, TextInput, Text, TouchableOpacity, BackHandler, Alert} from 'react-native';
 import axios from "axios";
 import {showAlert} from "../../Utils";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styleLogin} from './styles';
-class Login extends Component {
-    state = {
-        username: "",
-        password: "",
-        isAuthenticated: false
-    }
+export default class Login extends Component {
 
-            componentDidMount() {
+        state = {
+            username: "",
+            password: "",
+            focused: false,
+        }
+    componentDidMount() {
+        this.setState({focused:true});
         (async ()=>{
-         let token = await AsyncStorage.getItem("id_token")
-        if(token){
-            await AsyncStorage.setItem("id_token",token)
-            this.props.auth(true);
-            axios.defaults.headers.common['Authorization'] = 'Token ' + token;
-            this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});
-   }
-        else return null;
+            let token = await AsyncStorage.getItem("id_token")
+            if(token){
+                await AsyncStorage.setItem("id_token",token)
+                axios.defaults.headers.common['Authorization'] = 'Token ' + token;
+                this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});
+            }
+            else return null;
         })()
 
     }
 
+
+    // componentDidUpdate() {
+    //     if (!this.props.navigation.isFocused()) {
+    //         console.log("Login focus: ", this.props.navigation.isFocused())
+    //         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+    //     }
+    //     else{
+    //         console.log("Login focus:", this.props.navigation.isFocused())
+    //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+    //     }
+    // }
+    // handleBackButton = () => {
+    //     Alert.alert(
+    //         'Exit App',
+    //         'Exiting the application?', [{
+    //             text: 'Cancel',
+    //             onPress: () => console.log('Cancel Pressed'),
+    //             style: 'cancel'
+    //         }, {
+    //             text: 'OK',
+    //             onPress: () => BackHandler.exitApp()
+    //         }, ], {
+    //             cancelable: false
+    //         }
+    //     )
+    //
+    //     return true;
+    // }
 
 
     onUsernameChange(text) {
@@ -42,7 +70,6 @@ class Login extends Component {
                 const token = response.data.auth_token;
                 console.log(token);
                 axios.defaults.headers.common['Authorization'] = 'Token ' + token;
-                this.props.auth(true);
                 // this.userInput.clear();
                 this.passInput.clear();
                 (async ()=>{await AsyncStorage.setItem("id_token",token)

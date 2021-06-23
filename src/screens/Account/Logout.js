@@ -3,10 +3,13 @@ import Login from "./Login";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class Logout extends Component {
-
+    constructor(props) {
+        super(props);
+    }
     render() {
-        AsyncStorage.clear()
-        this.props.navigation.navigate('Login')
+        (async ()=>{await AsyncStorage.clear()
+                    this.props.navigation.navigate('Login');})()
+
         return null;
     }
 }

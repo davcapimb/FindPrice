@@ -63,6 +63,7 @@ class AddProduct extends Component {
             );
     }
 
+
     render() {
         const {
             formContainerStyle,

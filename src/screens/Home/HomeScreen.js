@@ -30,9 +30,7 @@ const DATA = [
 export default class HomeScreen extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-          search: '',
-      };
+
     }
 
     componentDidMount() {
@@ -50,6 +48,17 @@ export default class HomeScreen extends React.Component {
         })()
 
     }
+    componentDidUpdate() {
+        if (!this.props.navigation.isFocused()) {
+            // console.log("HomeScreen not focus", this.props.navigation.isFocused())
+            BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        }
+        else{
+            // console.log("HomeScreen in focus", this.props.navigation.isFocused())
+            BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+        }
+    }
+
     handleBackButton = () => {
         Alert.alert(
             'Exit App',
@@ -70,44 +79,37 @@ export default class HomeScreen extends React.Component {
 
 
     onPressComponent = item => {
-    this.props.navigation.navigate( item.id );
-  };
+        this.props.navigation.navigate( item.id );
+    };
 
   renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressRecipe(item)}>
-      <View style={styles.container}>
+    <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressComponent(item)} style={styles.container}>
+      <View >
         {/*<Image style={styles.photo} source={{ uri: item.photo_url }} />*/}
-        <Text style={styles.title}>{"Ciao"}</Text>
-        <Text style={styles.category}>{"Ciao"}</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        {/*<Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>*/}
       </View>
     </TouchableHighlight>
   );
 
 
-  updateSearch = (search) => {
-    this.setState({ search });
-  };
+
 
   render() {
+
     return (
 
       <View>
-          <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressRecipe(item)}>
-      <View style={styles.container}>
-        {/*<Image style={styles.photo} source={{ uri: item.photo_url }} />*/}
-        <Text style={styles.title}>{"Ciao"}</Text>
-        <Text style={styles.category}>{"Ciao"}</Text>
-      </View>
-    </TouchableHighlight>
-        {/*<FlatList*/}
-        {/*  vertical*/}
-        {/*  showsVerticalScrollIndicator={false}*/}
-        {/*  numColumns={2}*/}
-        {/*  data={recipes}*/}
-        {/*  renderItem={this.renderRecipes}*/}
-        {/*  // keyExtractor={item => `${item.recipeId}`}*/}
-        {/*/>*/}
+        <FlatList
+          vertical
+          showsVerticalScrollIndicator={false}
+          numColumns={2}
+          data={DATA}
+          renderItem={this.renderRecipes}
+          keyExtractor={item => `${item.id}`}
+        />
       </View>
     );
   }
 }
+

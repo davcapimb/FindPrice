@@ -9,6 +9,8 @@ import Register from './src/screens/Account/Register.js';
 import Logout from './src/screens/Account/Logout.js';
 import Scan from './src/screens/components/Scan.js';
 import HomeScreen from './src/screens/Home/HomeScreen';
+import ProductsView from './src/screens/components/ProductsView';
+
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Map from './src/screens/tabs/Map.js';
 import TabTwo from './src/screens/tabs/tab2.js';
@@ -72,7 +74,7 @@ export default class App extends Component {
                 </Tab.Screen>
             </Tab.Navigator>
         );
-    }
+    };
 
 
     renderDrawerComponents = () => {
@@ -140,9 +142,14 @@ export default class App extends Component {
                         {props => <HomeScreen{...props} />}
                     </Stack.Screen>
 
-                    <Stack.Screen name="Map">
-                        {props => <Map{...props} />}
+                    <Stack.Screen name="ProductsView">
+                        {props => <ProductsView{...props} />}
                     </Stack.Screen>
+
+                    <Stack.Screen name="DetailView">
+                        {props => <DetailView{...props} />}
+                    </Stack.Screen>
+
                 </Stack.Navigator>
 
 
