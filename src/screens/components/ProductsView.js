@@ -70,7 +70,7 @@ export default class ProductsView extends Component {
     componentDidMount() {
       var prods = [];
       console.log(this.props.route.params.category);
-      axios.get('api/v1/category?cat='+this.props.route.params.category)
+      axios.get('api/v1/prodFilt?cat='+this.props.route.params.category)
           .then(response => {
               response.data.map((option) => {
                   prods.push(
@@ -85,7 +85,9 @@ export default class ProductsView extends Component {
               console.log(this.state.products)
           })
           .catch(error => {
-                  showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
+                  for (const keys of Object.keys(error.response.data)){
+                        showAlert(keys, error.response.data[keys].toString());
+                }
               }
           );
   }

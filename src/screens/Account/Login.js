@@ -50,9 +50,17 @@ class Login extends Component {
 
             })
             .catch(error => {
-                    showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
+                for (const keys of Object.keys(error.response.data)){
+                        showAlert(keys, error.response.data[keys].toString());
                 }
-            );
+                    })
+                    //     console.log(response)
+                    //     (error, respons);
+                    //
+                    // }
+                    // )
+                // }
+            // );
     }
 
     render() {
