@@ -104,7 +104,7 @@ export default class App extends Component {
 
 
     render() {
-        axios.defaults.baseURL = 'http://10.0.2.2:8000/';
+        axios.defaults.baseURL = 'http://192.168.1.246:8000/';
         axios.defaults.timeout = 1500;
         return (
             <NavigationContainer>

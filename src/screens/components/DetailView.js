@@ -14,16 +14,15 @@ export default class ProductsView extends Component {
             scans:[],
             name:'',
             description:'',
-            datatime: ''
+            datatime: Date
         }
     }
 
     componentDidMount() {
+
+        this.setState({datetime:new Date()});
+        console.log(this.state.datetime)
         this.getProdScan();
-        let dt = new Date("30 July 2010 15:05 UTC");
-        dt = getCurrentTimestamp()
-        console.log(dt);
-        document.write(dt.toISOString());
         axios.get("api/v1/prodFilt?id="+ this.props.route.params.id )
           .then(response => {
               response.data.map((option) => {
@@ -43,11 +42,11 @@ export default class ProductsView extends Component {
           );
     }
 
-  getProdScan = (datatime) =>{
-        var scs = [];
+  getProdScan = () =>{
 
+        let scs = this.state.scans;
         axios.get("api/v1/prodScan?filter={\"lat\":\"37.4\",\"long\":\"-122\",\"id\":\""+ this.props.route.params.id + "\"," +
-            "\"dt\":\""+ datatime +"\"}")
+            "\"dt\":\""+ this.state.datetime +"\"}")
             .then(response => {
                 response.data.map((option) => {
                     scs.push(
@@ -57,6 +56,8 @@ export default class ProductsView extends Component {
                             price: option.price
                         }
                     );
+                    this.setState({datetime:option.scan_time})
+
                 })
                 this.setState({scans: scs})
             })
@@ -94,6 +95,7 @@ export default class ProductsView extends Component {
           data={this.state.scans}
           renderItem={this.renderProduct}
           keyExtractor={item => `${item.scan_time}`}
+          // onEndReached={this.getProdScan}
         />
       </View>
     );
