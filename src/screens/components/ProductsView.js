@@ -36,9 +36,10 @@ export default class ProductsView extends Component {
 
           })
           .catch(error => {
-                  for (const keys of Object.keys(error.response.data)){
-                        showAlert(keys, error.response.data[keys].toString());
-                }
+              console.log("error")
+                  // for (const keys of Object.keys(error.response.data)){
+                  //       showAlert(keys, error.response.data[keys].toString());
+                // }
               }
           );
   }

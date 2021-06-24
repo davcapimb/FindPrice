@@ -233,7 +233,7 @@ const styleCategory = StyleSheet.create({
     margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 100,
+    height: 200,
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 20,
@@ -251,7 +251,7 @@ const styleCategory = StyleSheet.create({
     },
     shadowRadius: 5,
     shadowOpacity: 1.0,
-    elevation: 3
+
   },
   categoriesName: {
     flex: 1,

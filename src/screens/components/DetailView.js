@@ -14,13 +14,14 @@ export default class ProductsView extends Component {
             scans:[],
             name:'',
             description:'',
-            datatime: Date
+            datetime:new Date()
         }
     }
 
     componentDidMount() {
+        let dt = new Date();
 
-        this.setState({datetime:new Date()});
+        this.setState({datetime:dt});
         console.log(this.state.datetime)
         this.getProdScan();
         axios.get("api/v1/prodFilt?id="+ this.props.route.params.id )
@@ -62,9 +63,10 @@ export default class ProductsView extends Component {
                 this.setState({scans: scs})
             })
             .catch(error => {
-                for (const keys of Object.keys(error.response.data)){
-                    showAlert(keys, error.response.data[keys].toString());
-                }
+                console.log("error")
+                // for (const keys of Object.keys(error.response.data)){
+                //     showAlert(keys, error.response.data[keys].toString());
+
             }
             );
   }

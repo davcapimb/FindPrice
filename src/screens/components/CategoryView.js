@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View} from 'react-native';
+import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View, SafeAreaView} from 'react-native';
 import axios from 'axios';
 import {BackHandler} from 'react-native';
 import {showAlert} from '../../Utils';
@@ -14,6 +14,7 @@ export default class CategoryView extends Component {
             options: [],
             search: '',
             matches: [],
+
         };
     }
 
@@ -26,6 +27,7 @@ export default class CategoryView extends Component {
                         {
                             id: key,
                             name: option.category,
+                            photo_url: "../../assets:"+option.category+".jpg"
                         },
                     );
                 });
@@ -51,7 +53,7 @@ export default class CategoryView extends Component {
     renderCategory = ({item}) => (
         <TouchableHighlight underlayColor="rgba(73,182,77,1,0.9)" onPress={() => this.onPressCategory(item)}>
             <View style={styleCategory.categoriesItemContainer}>
-                {/*<Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />*/}
+                <Image style={styleCategory.categoriesPhoto} source={{ uri: item.photo_url }} />
                 <Text style={styleCategory.categoriesName}>{item.name}</Text>
 
             </View>
@@ -76,7 +78,7 @@ export default class CategoryView extends Component {
     render() {
         const {search} = this.state;
         return (
-            <View>
+            <SafeAreaView>
                 <SearchBar
                     containerStyle={{
                         backgroundColor: 'transparent',
@@ -110,7 +112,7 @@ export default class CategoryView extends Component {
                     renderItem={this.renderCategory}
                     keyExtractor={item => `${item.id}`}
                 />
-            </View>
+            </SafeAreaView>
         );
     }
 }
