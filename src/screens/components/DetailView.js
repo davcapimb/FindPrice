@@ -6,6 +6,10 @@ import {showAlert} from "../../Utils";
 import MapView from 'react-native-maps';
 import {ProductCard} from './styles';
 import {getCurrentTimestamp} from "react-native/Libraries/Utilities/createPerformanceLogger";
+import Geolocation from 'react-native-geolocation-service';
+
+
+
 
 export default class ProductsView extends Component {
     constructor(props) {
@@ -20,10 +24,9 @@ export default class ProductsView extends Component {
 
     componentDidMount() {
         let dt = new Date();
+         this.getCurrentPosition();
 
         this.setState({datetime:dt});
-        console.log(this.state.datetime)
-        this.getProdScan();
         axios.get("api/v1/prodFilt?id="+ this.props.route.params.id )
           .then(response => {
               response.data.map((option) => {
@@ -46,8 +49,12 @@ export default class ProductsView extends Component {
   getProdScan = () =>{
 
         let scs = this.state.scans;
-        axios.get("api/v1/prodScan?filter={\"lat\":\"37.4\",\"long\":\"-122\",\"id\":\""+ this.props.route.params.id + "\"," +
-            "\"dt\":\""+ this.state.datetime +"\"}")
+        axios.get("api/v1/prodScan?filter={" +
+            "\"lat\":\""+this.state.region.latitude+"\"," +
+            "\"long\":\""+this.state.region.longitude+"\"," +
+            "\"id\":\""+ this.props.route.params.id + "\"," +
+            "\"dt\":\""+ this.state.datetime.toISOString() +"\"" +
+            "}")
             .then(response => {
                 response.data.map((option) => {
                     scs.push(
@@ -57,7 +64,7 @@ export default class ProductsView extends Component {
                             price: option.price
                         }
                     );
-                    this.setState({datetime:option.scan_time})
+                    this.setState({datetime:new Date(option.scan_time)})
 
                 })
                 this.setState({scans: scs})
@@ -97,7 +104,7 @@ export default class ProductsView extends Component {
           data={this.state.scans}
           renderItem={this.renderProduct}
           keyExtractor={item => `${item.scan_time}`}
-          // onEndReached={this.getProdScan}
+          onEndReached={this.getProdScan}
         />
       </View>
     );

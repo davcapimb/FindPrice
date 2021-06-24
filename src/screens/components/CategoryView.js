@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View, SafeAreaView} from 'react-native';
+import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View,  ImageBackground} from 'react-native';
 import axios from 'axios';
 import {BackHandler} from 'react-native';
 import {showAlert} from '../../Utils';
 import MapView from 'react-native-maps';
 import {styleCategory} from './styles';
 import {SearchBar} from 'react-native-elements';
-
+import {images} from './styles';
 export default class CategoryView extends Component {
     constructor(props) {
         super(props);
@@ -27,10 +27,11 @@ export default class CategoryView extends Component {
                         {
                             id: key,
                             name: option.category,
-                            photo_url: "../../assets:"+option.category+".jpg"
+
                         },
                     );
                 });
+
                 this.setState({options: categ});
                 this.setState({matches: this.state.options});
                 console.log(this.state.options);
@@ -51,10 +52,11 @@ export default class CategoryView extends Component {
     };
 
     renderCategory = ({item}) => (
-        <TouchableHighlight underlayColor="rgba(73,182,77,1,0.9)" onPress={() => this.onPressCategory(item)}>
+        <TouchableHighlight underlayColor="rgba(73,182,77,1,0.9)" style={{borderRadius:50}} onPress={() => this.onPressCategory(item)}>
             <View style={styleCategory.categoriesItemContainer}>
-                <Image style={styleCategory.categoriesPhoto} source={{ uri: item.photo_url }} />
+            <ImageBackground style={styleCategory.categoriesPhoto} source={images[item.name].uri} >
                 <Text style={styleCategory.categoriesName}>{item.name}</Text>
+            </ImageBackground>
 
             </View>
         </TouchableHighlight>
@@ -78,7 +80,7 @@ export default class CategoryView extends Component {
     render() {
         const {search} = this.state;
         return (
-            <SafeAreaView>
+            <View>
                 <SearchBar
                     containerStyle={{
                         backgroundColor: 'transparent',
@@ -112,7 +114,8 @@ export default class CategoryView extends Component {
                     renderItem={this.renderCategory}
                     keyExtractor={item => `${item.id}`}
                 />
-            </SafeAreaView>
+
+            </View>
         );
     }
 }

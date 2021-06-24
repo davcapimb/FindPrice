@@ -233,17 +233,16 @@ const styleCategory = StyleSheet.create({
     margin: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 200,
+    height: 180,
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 20,
   },
   categoriesPhoto: {
     width: '100%',
-    height: 155,
-    borderRadius: 20,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
+    height: '100%',
+    borderRadius:50,
+
     shadowColor: 'blue',
     shadowOffset: {
       width: 0,
@@ -258,8 +257,10 @@ const styleCategory = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#333333',
-    marginTop: 8
+    color: '#FFFFFF',
+    backgroundColor:'#000000a0',
+      borderRadius: 20,
+
   },
   categoriesInfo: {
     marginTop: 3,
@@ -316,6 +317,28 @@ const ProductCard = StyleSheet.create({
   }
 });
 
+const images = {
+  alimenti: {
+    uri: require('../../../assets/alimenti.jpg')
+  },
+  giocattoli: {
+    uri: require('../../../assets/giocattoli.jpg')
+  },
+    casa: {
+    uri: require('../../../assets/casa.jpg')
+  },
+    undefined: {
+    uri: require('../../../assets/undefined.jpg')
+  },
+    giardino: {
+    uri: require('../../../assets/giardino.jpg')
+  },
+    elettronica: {
+    uri: require('../../../assets/elettronica.jpg')
+  },
+
+}
 
 
-export {styleAddProduct, styleScan, stylelist_view, styledetail_view, styleCategory, ProductCard}
+
+export {styleAddProduct, styleScan, stylelist_view, styledetail_view, styleCategory, ProductCard, images}
