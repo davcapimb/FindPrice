@@ -1,26 +1,69 @@
 import React, {Component} from "react";
-import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View} from "react-native";
+import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View, ImageBackground} from 'react-native';
 import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";
-import MapView from 'react-native-maps';
-import {ProductCard} from './styles';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {ProductCard, styleCategory} from './styles';
 import {SearchBar} from 'react-native-elements';
+import {images} from './styles';
+import {styleProduct} from './styles';
+import Geolocation from 'react-native-geolocation-service';
 
+
+const LATITUDE_DELTA = 0.01;
+const LONGITUDE_DELTA = 0.01;
 export default class ProductsView extends Component {
     constructor(props) {
     super(props);
     this.state={
         products:[],
         search: '',
-        matches:[]
+        matches:[],
+        region:{
+          latitude: 0,
+          longitude: 0,
+          latitudeDelta: 0,
+          longitudeDelta: 0,
+        },
     }
   }
 
+    setRegion(region) {
+        this.setState({ region });
+    }
+
+    getCurrentPosition (){
+        try {
+          Geolocation.getCurrentPosition(
+            (position) => {
+              const region = {
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                latitudeDelta: LATITUDE_DELTA,
+                longitudeDelta: LONGITUDE_DELTA,
+              };
+              this.setRegion(region);
+            },
+            (error) => {
+              switch (error.code) {
+                case 1:
+                    Alert.alert("", "Please enable the location permissions");
+                    break;
+                default:
+                  Alert.alert("", "Error while detecting your location");
+              }
+            }
+          );
+        } catch(e) {
+          alert(e.message || "");
+        }
+      };
+
     componentDidMount() {
       var prods = [];
-      console.log(this.props.route.params.category);
-      axios.get('api/v1/prodFilt?cat='+this.props.route.params.category)
+       this.getCurrentPosition();
+       axios.get('api/v1/prodFilt?cat='+this.props.route.params.category)
           .then(response => {
               response.data.map((option) => {
                   prods.push(
@@ -46,12 +89,18 @@ export default class ProductsView extends Component {
 
   onPressProduct = item => {
     const id = item.id;
-    this.props.navigation.navigate('DetailView', { id });
+    const category = this.props.route.params.category
+    this.props.navigation.navigate('DetailView', { id, category });
+    console.log(this.props.route.params.category)
   };
 
   renderProduct = ({ item }) => (
+
+
     <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressProduct(item)}>
+
       <View style={ProductCard.container}>
+
         {/*<Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />*/}
         <Text style={ProductCard.title}>{item.name}</Text>
 
@@ -75,6 +124,9 @@ export default class ProductsView extends Component {
         this.setState({matches: match});
     };
 
+    onRegionChange(region) {
+      this.setState({ region });
+    }
     render() {
         const {search} = this.state;
         return (
@@ -107,11 +159,18 @@ export default class ProductsView extends Component {
                     // onSubmitEditing={()}
                     // autoCapitalize={}
                 />
+                 <View style={styleProduct.topPhotoContainer}>
+                     <ImageBackground style={styleCategory.categoriesPhoto} source={images[this.props.route.params.category].uri} >
+                <Text style={styleCategory.categoriesName}>{this.props.route.params.category}</Text>
+                 </ImageBackground>
+
+                </View>
                 <FlatList
                   data={this.state.matches}
                   renderItem={this.renderProduct}
                   keyExtractor={item => `${item.id}`}
                 />
+
             </View>
     );
   }

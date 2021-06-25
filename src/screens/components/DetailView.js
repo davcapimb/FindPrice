@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View} from "react-native";
+import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View, ImageBackground} from 'react-native';
 import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";
@@ -7,7 +7,7 @@ import MapView from 'react-native-maps';
 import {ProductCard} from './styles';
 import {getCurrentTimestamp} from "react-native/Libraries/Utilities/createPerformanceLogger";
 import Geolocation from 'react-native-geolocation-service';
-
+import {styleDetail} from './styles';
 
 
 
@@ -94,18 +94,47 @@ export default class ProductsView extends Component {
     </TouchableHighlight>
   );
 
+   onRegionChange(region) {
+      this.setState({ region });
+      console.log(this.state.region);
+      this.setState({scans:[]});
+      this.getProdScan();
+    }
+
   render() {
     return (
       <View>
-          <Text>
-              {this.state.name}, {this.state.description}
-          </Text>
-        <FlatList
-          data={this.state.scans}
-          renderItem={this.renderProduct}
-          keyExtractor={item => `${item.scan_time}`}
-          onEndReached={this.getProdScan}
-        />
+          <View style={styleDetail.topPhotoContainer}>
+              <ImageBackground style={styleCategory.categoriesPhoto} source={images[this.props.route.params.category].uri} >
+                  <Text style={styleCategory.categoriesName}>{this.state.name}{"\n"}{this.state.description}</Text>
+              </ImageBackground>
+          </View>
+          <View style={styleDetail.flatContainer}>
+          <FlatList
+              data={this.state.scans}
+              renderItem={this.renderProduct}
+              keyExtractor={item => `${item.scan_time}`}
+            onEndReached={this.getProdScan}
+          />
+              </View>
+          <View style={styleDetail.bottomMapContainer}>
+              <MapView
+                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                  showsUserLocation
+                  style={styleDetail.map}
+                  region={this.state.region}
+                  // onRegionChangeComplete={this.onRegionChange.bind(this)}
+              >
+                  {this.state.markers.map((marker) => (
+                    <Marker
+                      key={marker.id}
+                      coordinate={marker.coordinate}
+                      // title={"ciao"}
+                      // description={"ueeee"}
+                    />
+                  ))}
+              </MapView>
+          </View>
       </View>
     );
   }

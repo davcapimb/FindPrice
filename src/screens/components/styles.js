@@ -101,17 +101,6 @@ const styleAddProduct = StyleSheet.create({
 });
 
 
-const styledetail_view = StyleSheet.create({
-    center: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    title: {
-        fontSize: 36,
-        marginBottom: 16,
-    },
-});
 
 const stylelist_view = StyleSheet.create({
     center: {
@@ -227,6 +216,70 @@ const styleScan = StyleSheet.create({
     },
 });
 
+
+const styleDetail = StyleSheet.create({
+    topPhotoContainer:{
+        marginTop:"5%",
+        width:"80%",
+        height:"20%",
+        marginLeft:"10%",
+        borderColor:"#000000",
+        borderRadius:20,
+        overflow: 'hidden',
+        backgroundColor:"#000000"
+    },
+
+    flatContainer:{
+         marginTop:"3%",
+        width:"90%",
+        height:"30%",
+        marginLeft:"5%",
+        borderColor:"#000000",
+        borderRadius:20,
+        overflow: 'hidden'
+    },
+
+    bottomMapContainer:{
+        marginTop:"5%",
+        width:"80%",
+        marginLeft:"10%",
+        height:"40%",
+        borderRadius:20,
+        overflow: 'hidden',
+    },
+    center: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    title: {
+        fontSize: 36,
+        marginBottom: 16,
+    },
+    container: {
+   ...StyleSheet.absoluteFillObject,
+   height: 650,
+   width: 400,
+   justifyContent: 'flex-end',
+   alignItems: 'center',
+ },
+ map: {
+   ...StyleSheet.absoluteFillObject,
+ },
+})
+
+const styleProduct = StyleSheet.create({
+    topPhotoContainer:{
+        marginTop:"5%",
+        width:"80%",
+        height:"30%",
+        marginLeft:"10%",
+        borderColor:"#000000",
+        borderRadius:20,
+        overflow: 'hidden',
+        backgroundColor:"#000000"
+    },
+})
 const styleCategory = StyleSheet.create({
     categoriesItemContainer: {
     flex: 1,
@@ -237,11 +290,12 @@ const styleCategory = StyleSheet.create({
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 20,
+    overflow: 'hidden',
   },
   categoriesPhoto: {
     width: '100%',
     height: '100%',
-    borderRadius:50,
+
 
     shadowColor: 'blue',
     shadowOffset: {
@@ -285,11 +339,11 @@ const ProductCard = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginLeft: RECIPE_ITEM_MARGIN,
+    marginLeft: "10%",
     marginRight: RECIPE_ITEM_MARGIN,
-    marginTop: 20,
-    width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
-    height: RECIPE_ITEM_HEIGHT + 75,
+    marginTop: 10,
+    width: "80%",
+    height: "10%",
     borderColor: '#cccccc',
     borderWidth: 0.5,
     borderRadius: 15
@@ -341,4 +395,4 @@ const images = {
 
 
 
-export {styleAddProduct, styleScan, stylelist_view, styledetail_view, styleCategory, ProductCard, images}
+export {styleAddProduct, styleScan, stylelist_view, styleCategory, ProductCard, images, styleProduct, styleDetail}
