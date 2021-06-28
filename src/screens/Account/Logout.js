@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Login from "./Login";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 class Logout extends Component {
     constructor(props) {

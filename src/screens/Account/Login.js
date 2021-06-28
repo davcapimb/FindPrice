@@ -14,6 +14,7 @@ export default class Login extends Component {
     componentDidMount() {
         this.setState({focused:true});
         (async ()=>{
+
             let token = await AsyncStorage.getItem("id_token")
             if(token){
                 await AsyncStorage.setItem("id_token",token)
@@ -35,7 +36,7 @@ export default class Login extends Component {
         this.setState({password: text});
     }
 
-    handleLogin() {
+    async handleLogin() {
         const payload = {username: this.state.username, password: this.state.password}
         axios.post('api/v1/token/login', payload)
             .then(response => {
