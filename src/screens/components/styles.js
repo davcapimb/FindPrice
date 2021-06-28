@@ -390,6 +390,19 @@ const images = {
     elettronica: {
     uri: require('../../../assets/elettronica.jpg')
   },
+    ScanTAB:{
+      uri: require('../../../assets/ScanTAB.png')
+    },
+    MapTAB:{
+      uri: require('../../../assets/MapTAB.jpg')
+    },
+    ProductTAB:{
+      uri: require('../../../assets/ProductTAB.jpg')
+    },
+    ListView:{
+      uri: require('../../../assets/ListView.jpg')
+    }
+
 
 }
 

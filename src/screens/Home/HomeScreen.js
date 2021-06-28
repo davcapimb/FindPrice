@@ -1,15 +1,19 @@
 import React from 'react';
-import {FlatList, ScrollView, Text, View, TouchableHighlight, Image, BackHandler, Alert} from 'react-native';
+import {FlatList, ScrollView, Text, View, TouchableHighlight, Image, BackHandler, Alert,ImageBackground} from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import styles from './styles';
+import {styleCategory} from '../components/styles';
+import {images} from '../components/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import {styleLogin} from '../Account/styles';
 // import MenuImage from '../../components/MenuImage/MenuImage';
 // import DrawerActions from 'react-navigation';
 // import { getCategoryName } from '../../data/MockDataAPI';
+import {RecipeCard} from '../../AppStyles';
 const DATA = [
   {
-    id: "ScanTAB",
+    id:"ScanTAB",
     title: "Add Scan",
   },
   {
@@ -82,13 +86,14 @@ export default class HomeScreen extends React.Component {
         this.props.navigation.navigate( item.id );
     };
 
-  renderRecipes = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,0.9)' onPress={() => this.onPressComponent(item)} style={styles.container}>
+  renderRecipes = ({item}) => (
+    <TouchableHighlight underlayColor={"#ceecf9"} onPress={() => this.onPressComponent(item)} style={styles.container}>
       <View >
-        {/*<Image style={styles.photo} source={{ uri: item.photo_url }} />*/}
+            <ImageBackground style={RecipeCard.photo} source={images[item.id].uri} >
         <Text style={styles.title}>{item.title}</Text>
-        {/*<Text style={styles.category}>{getCategoryName(item.categoryId)}</Text>*/}
+            </ImageBackground>
       </View>
+
     </TouchableHighlight>
   );
 
@@ -98,8 +103,12 @@ export default class HomeScreen extends React.Component {
   render() {
 
     return (
+        <View style={styles.mainView}>
 
-      <View>
+      <View style={styles.logoView}>
+          <Text style={styles.logo}>FindPrice</Text>
+      </View>
+      <View style={styles.listView} >
         <FlatList
           vertical
           showsVerticalScrollIndicator={false}
@@ -109,6 +118,9 @@ export default class HomeScreen extends React.Component {
           keyExtractor={item => `${item.id}`}
         />
       </View>
+            <View style={styles.bottomView}>
+            </View>
+        </View>
     );
   }
 }

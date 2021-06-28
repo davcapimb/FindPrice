@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 const styleLogin = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#2d333b',
+        backgroundColor: '#003f5c',
         alignItems: 'center',
         justifyContent: 'center',
     },

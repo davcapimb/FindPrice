@@ -26,34 +26,6 @@ export default class Login extends Component {
     }
 
 
-    // componentDidUpdate() {
-    //     if (!this.props.navigation.isFocused()) {
-    //         console.log("Login focus: ", this.props.navigation.isFocused())
-    //         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-    //     }
-    //     else{
-    //         console.log("Login focus:", this.props.navigation.isFocused())
-    //         BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
-    //     }
-    // }
-    // handleBackButton = () => {
-    //     Alert.alert(
-    //         'Exit App',
-    //         'Exiting the application?', [{
-    //             text: 'Cancel',
-    //             onPress: () => console.log('Cancel Pressed'),
-    //             style: 'cancel'
-    //         }, {
-    //             text: 'OK',
-    //             onPress: () => BackHandler.exitApp()
-    //         }, ], {
-    //             cancelable: false
-    //         }
-    //     )
-    //
-    //     return true;
-    // }
-
 
     onUsernameChange(text) {
         this.setState({username: text});

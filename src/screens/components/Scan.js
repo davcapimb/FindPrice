@@ -1,12 +1,13 @@
-import React, {Component, useState} from "react";
+import React, {Component, useState} from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
-import axios from "axios";
-import ModalDropdown from "react-native-modal-dropdown";
+import {Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import axios from 'axios';
+import ModalDropdown from 'react-native-modal-dropdown';
 import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
-import {showAlert} from "../../Utils";
+import {showAlert} from '../../Utils';
 import {styleScan} from './styles';
+
 export default class Scan extends Component {
     state = {
         product: '',
@@ -15,120 +16,120 @@ export default class Scan extends Component {
         price: '',
         prod_ids: [],
         options: [],
-        image:'',
-        result:[],
-    }
+        image: '',
+        result: [],
+    };
 
     componentDidMount() {
 
         var prods = [];
         var prod_name = [];
-        var errorMsg = "";
+        var errorMsg = '';
 
         axios.get('api/v1/products/')
             .then(response => {
                 response.data.map((option, key) => {
-                    prods.push(option)
-                    prod_name.push(option.product_name)
-                })
-                this.setState({prod_ids: prods})
-                this.setState({options: prod_name})
+                    prods.push(option);
+                    prod_name.push(option.product_name);
+                });
+                this.setState({prod_ids: prods});
+                this.setState({options: prod_name});
             })
             .catch(error => {
                     showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
-                }
+                },
             );
 
         (async () => {
-              try {
-                    const granted = await PermissionsAndroid.request(
-                        PermissionsAndroid.PERMISSIONS.CAMERA,
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.CAMERA,
                     {
-                        title: "Cool Photo App Camera Permission",
+                        title: 'Cool Photo App Camera Permission',
                         message:
-                        "Cool Photo App needs access to your camera " +
-                        "so you can take awesome pictures.",
-                        buttonNeutral: "Ask Me Later",
-                        buttonNegative: "Cancel",
-                        buttonPositive: "OK"
-                    }
-                    );
+                            'Cool Photo App needs access to your camera ' +
+                            'so you can take awesome pictures.',
+                        buttonNeutral: 'Ask Me Later',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    },
+                );
 
-                    if (granted) {
-                        Geolocation.getCurrentPosition(
-                            (position) => {
+                if (granted) {
+                    Geolocation.getCurrentPosition(
+                        (position) => {
                             console.log(position);
                             this.setState({lat: position.coords.latitude, long: position.coords.longitude});
-                            },
+                        },
                         (error) => {
-                          // See error code charts below.
+                            // See error code charts below.
                             errorMsg = 'Permission to access location was denied';
-                            showAlert("position", errorMsg);
+                            showAlert('position', errorMsg);
                             console.log(error.code, error.message);
-                            },
-                        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-                        );
-                    }
-              } catch (err) {
-                  console.warn(err);
-              }
+                        },
+                        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+                    );
+                }
+            } catch (err) {
+                console.warn(err);
+            }
         })();
     };
 
 
-    onTakePhoto= () => {
+    onTakePhoto = () => {
         launchCamera({mediaType: 'image'}, async (media) => {
-            if (!media.didCancel) {
-                this.setState({image:media.assets[0].uri})
-                const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-                console.log('priceRecognized: ', priceRecognized);
-                this.setState({result: priceRecognized})
-            }
-        }
+                if (!media.didCancel) {
+                    this.setState({image: media.assets[0].uri});
+                    const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+                    console.log('priceRecognized: ', priceRecognized);
+                    this.setState({result: priceRecognized});
+                }
+            },
         );
-    }
+    };
 
-      onSelectImage= () => {
+    onSelectImage = () => {
         launchImageLibrary({mediaType: 'image'}, async (media) => {
-            if (!media.didCancel) {
-                this.setState({image:media.assets[0].uri})
-                const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-                console.log('priceRecognized: ', priceRecognized);
-                this.setState({result: priceRecognized})
-                await this.onTakePrice();
-            }
-        }
+                if (!media.didCancel) {
+                    this.setState({image: media.assets[0].uri});
+                    const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+                    console.log('priceRecognized: ', priceRecognized);
+                    this.setState({result: priceRecognized});
+                    await this.onTakePrice();
+                }
+            },
         );
-    }
+    };
 
-    onTakePrice(){
+    onTakePrice() {
         const reg1 = /[\$\£\€]+\s*\d+(?:[\.\,]\d{1,2})/;
         const reg2 = /[\$\£\€]*\s*\d+(?:[\.\,]\d{1,2})/;
-        var current_price="";
-        var temp='';
-        this.state.result.map((box)=>{
-                temp=box.blockText.match(reg1);
-                if(temp!=undefined) {
-                    current_price=box.blockText.match(reg1)
-                    console.log(current_price);
+        var current_price = '';
+        var temp = '';
+        this.state.result.map((box) => {
+            temp = box.blockText.match(reg1);
+            if (temp != undefined) {
+                current_price = box.blockText.match(reg1);
+                console.log(current_price);
 
-                }
-            })
-        if (current_price===''){
-            this.state.result.map((box)=>{
-                temp=box.blockText.match(reg2);
-                if(temp!=undefined){
-                    current_price=box.blockText.match(reg2);
+            }
+        });
+        if (current_price === '') {
+            this.state.result.map((box) => {
+                temp = box.blockText.match(reg2);
+                if (temp != undefined) {
+                    current_price = box.blockText.match(reg2);
                     console.log(current_price);
                 }
-            })
+            });
         }
         console.log('current price', current_price);
-        current_price[0] = current_price[0].replace(/,/g,'.');
-        current_price[0] = current_price[0].replace(/[\$\£\€]/g,'');
-        this.setState({price:current_price[0]})
-        this.priceInput.setNativeProps({text: current_price[0]})
-        return (current_price)
+        current_price[0] = current_price[0].replace(/,/g, '.');
+        current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
+        this.setState({price: current_price[0]});
+        this.priceInput.setNativeProps({text: current_price[0]});
+        return (current_price);
     }
 
     onProductChange(text) {
@@ -141,18 +142,24 @@ export default class Scan extends Component {
 
 
     handleScan() {
-        const payload = {product: this.state.product, price: this.state.price, lat: this.state.lat, long: this.state.long}
+        const payload = {
+            product: this.state.product,
+            price: this.state.price,
+            lat: this.state.lat,
+            long: this.state.long,
+        };
         axios.post('api/v1/scans/', payload)
             .then(response => {
-                this.props.navigation.navigate("Draw");
+                this.props.navigation.navigate('Draw');
 
             })
             .catch(error => {
-                    showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
-                }
+                    for (const keys of Object.keys(error.response.data)) {
+                        showAlert(keys, error.response.data[keys].toString());
+                    }
+                },
             );
     }
-
 
 
     render() {
@@ -166,7 +173,7 @@ export default class Scan extends Component {
                         placeholder="Select a product"
 
                         onSelect={(index, value) => {
-                            this.setState({selected: value})
+                            this.setState({selected: value});
                         }}
                         options={this.state.options}
                         onSelect={this.onProductChange.bind(this)}
@@ -182,7 +189,7 @@ export default class Scan extends Component {
                         placeholder="Price"
                         placeholderTextColor="#003f5c"
                         ref={input => {
-                            this.priceInput = input
+                            this.priceInput = input;
                         }}
                         onChangeText={this.onPriceChange.bind(this)}
                     />
@@ -194,7 +201,7 @@ export default class Scan extends Component {
                 <TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>
                     <Text style={styleScan.buttonText}>Take Photo</Text>
                 </TouchableOpacity>
-                                <TouchableOpacity style={styleScan.button} onPress={() => this.onSelectImage()}>
+                <TouchableOpacity style={styleScan.button} onPress={() => this.onSelectImage()}>
                     <Text style={styleScan.buttonText}>Take Image</Text>
                 </TouchableOpacity>
 
