@@ -20,6 +20,7 @@ export default class ProductsView extends Component {
             description:'',
             datetime:new Date()
         }
+        this.animationValue = new Animated.Value(0)
     }
 
     componentDidMount() {

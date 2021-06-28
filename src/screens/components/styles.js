@@ -401,6 +401,9 @@ const images = {
     },
     ListView:{
       uri: require('../../../assets/ListView.jpg')
+    },
+    Marker:{
+      uri: require('../../../assets/marker.png')
     }
 
 
