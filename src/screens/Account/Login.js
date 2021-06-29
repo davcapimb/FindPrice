@@ -4,6 +4,7 @@ import axios from "axios";
 import {showAlert} from "../../Utils";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {styleLogin} from './styles';
+
 export default class Login extends Component {
 
         state = {
@@ -97,12 +98,11 @@ export default class Login extends Component {
                 <TouchableOpacity>
                     <Text style={styleLogin.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styleLogin.loginBtn}>
-                    <Text style={styleLogin.loginText} onPress={() => this.handleLogin()}>LOGIN</Text>
+                <TouchableOpacity style={styleLogin.loginBtn} onPress={() => this.handleLogin()}>
+                    <Text style={styleLogin.loginText} >LOGIN</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styleLogin.loginText}
-                          onPress={() => this.props.navigation.navigate("Register")}>Signup</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Register")}>
+                    <Text style={styleLogin.loginText}>Signup</Text>
                 </TouchableOpacity>
 
             </View>

@@ -32,8 +32,10 @@ export const RecipeCard = StyleSheet.create({
 
   },
   photo: {
-    marginTop:10,
-    height: '99%',
+    marginTop:20,
+    marginBottom: 20,
+    width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
+    height: RECIPE_ITEM_HEIGHT,
     aspectRatio: 1,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0

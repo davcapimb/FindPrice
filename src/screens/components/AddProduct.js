@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Text, TextInput, View} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {Icon, Button} from 'react-native-elements';
 import {showAlert} from '../../Utils';
-import {styleAddProduct} from './styles';
+import {styleAddProduct, styleScan} from './styles';
 
 class AddProduct extends Component {
     state = {
@@ -72,14 +72,15 @@ class AddProduct extends Component {
         } = styleAddProduct;
 
         return (
-            <View style={{flex: 1, backgroundColor: 'white'}}>
-                <View style={formContainerStyle}>
-                    <View style={styleAddProduct.input}>
+            <View style={styleScan.container}>
+                <Text style={styleScan.logo}>Add Product</Text>
+
+                    <View style={styleScan.inputView}>
                         <TextInput
+                            style={styleScan.inputText}
                             placeholder="Product Name"
                             autoCorrect={false}
                             autoCapitalize="none"
-                            style={textInputStyle}
                             ref={input => {
                                 this.prodInput = input;
                             }}
@@ -87,25 +88,20 @@ class AddProduct extends Component {
                         />
                     </View>
 
-                    <View style={styleAddProduct.input}>
+                    <View style={styleScan.inputView}>
                         <TextInput
                             autoCapitalize="none"
                             autoCorrect={false}
                             placeholder="Description"
-                            style={textInputStyle}
+                            style={styleScan.inputText}
                             ref={input => {
                                 this.descInput = input;
                             }}
                             onChangeText={this.onDescriptionChange.bind(this)}
                         />
                     </View>
-                    <View style={styleAddProduct.viewStyle}>
-                        <View style={styleAddProduct.input}>
 
-                            {/*<Image*/}
-                            {/*    style={style.mapIcon}*/}
-                            {/*    source={require('../assets/list.png')}*/}
-                            {/*/>*/}
+                        <View style={styleScan.dropdownViewStyle}>
 
                             <ModalDropdown
                                 defaultValue="Select a category"
@@ -115,32 +111,16 @@ class AddProduct extends Component {
                                 }}
                                 options={this.state.options}
                                 onSelect={this.onCategoryChange.bind(this)}
-                                dropdownTextStyle={styleAddProduct.dropdownTextStyle}
-                                textStyle={styleAddProduct.textStyle}
-                                dropdownStyle={styleAddProduct.dropdownStyle}
-                                style={styleAddProduct.styledrop}
+                                dropdownTextStyle={styleScan.dropdownTextStyle}
+                                textStyle={styleScan.textStyle}
+                                dropdownStyle={styleScan.dropdownStyle}
+                                style={styleScan.styledrop}
                             />
-                            <Icon name="label"/>
+
                         </View>
-                        {/*<View style={style.container}>*/}
-                        {/*    <View style={style.row}>*/}
-                        {/*        <View style={style.cell}>*/}
-
-                        {/*            <ModalDropdown style={style.dropdown_6}*/}
-                        {/*                           options={this.state.options}*/}
-                        {/*                           onSelect={this.onCategoryChange.bind(this)}*/}
-                        {/*                           >*/}
-
-                        {/*            </ModalDropdown>*/}
-                        {/*        </View>*/}
-
-                        {/*    </View>*/}
-                    </View>
-                    <View style={buttonContainerStyle}>
-                        <Button title="Add Product" onPress={() => this.handleAddProduct()}/>
-                    </View>
-
-                </View>
+                    <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.handleAddProduct()}>
+                        <Text style={styleScan.buttonText}>Add Product</Text>
+                    </TouchableOpacity>
             </View>
         );
     }

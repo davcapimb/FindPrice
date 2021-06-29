@@ -3,11 +3,11 @@ import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View, ImageBac
 import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";
-import MapView from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {ProductCard} from './styles';
 import {getCurrentTimestamp} from "react-native/Libraries/Utilities/createPerformanceLogger";
 import Geolocation from 'react-native-geolocation-service';
-import {styleDetail} from './styles';
+import {styleDetail, images} from './styles';
 
 
 
@@ -20,7 +20,6 @@ export default class ProductsView extends Component {
             description:'',
             datetime:new Date()
         }
-        this.animationValue = new Animated.Value(0)
     }
 
     componentDidMount() {
@@ -106,8 +105,8 @@ export default class ProductsView extends Component {
     return (
       <View>
           <View style={styleDetail.topPhotoContainer}>
-              <ImageBackground style={styleCategory.categoriesPhoto} source={images[this.props.route.params.category].uri} >
-                  <Text style={styleCategory.categoriesName}>{this.state.name}{"\n"}{this.state.description}</Text>
+              <ImageBackground style={styleDetail.categoriesPhoto} source={images[this.props.route.params.category].uri} >
+                  <Text style={styleDetail.categoriesName}>{this.state.name}{"\n"}{this.state.description}</Text>
               </ImageBackground>
           </View>
           <View style={styleDetail.flatContainer}>
@@ -124,7 +123,7 @@ export default class ProductsView extends Component {
                   showsUserLocation
                   style={styleDetail.map}
                   region={this.state.region}
-                  // onRegionChangeComplete={this.onRegionChange.bind(this)}
+                  onRegionChangeComplete={this.onRegionChange.bind(this)}
               >
                   {this.state.markers.map((marker) => (
                     <Marker

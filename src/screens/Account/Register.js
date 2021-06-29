@@ -85,11 +85,11 @@ class Register extends Component {
                         onChangeText={this.onUsernameChange.bind(this)}
                     />
                 </View>
-                <TouchableOpacity style={styleLogin.loginBtn}>
-                    <Text style={styleLogin.loginText} onPress={() => this.handleRegister()}>REGISTER</Text>
+                <TouchableOpacity style={styleLogin.loginBtn} onPress={() => this.handleRegister()}>
+                    <Text style={styleLogin.loginText}>REGISTER</Text>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Text style={styleLogin.forgot} onPress={() => this.props.navigation.navigate("Login")}>Already have an account?</Text>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("Login")}>
+                    <Text style={styleLogin.forgot}>Already have an account?</Text>
                 </TouchableOpacity>
 
                 </View>
