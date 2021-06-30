@@ -1,5 +1,15 @@
 import React, {Component} from 'react';
-import {Alert, Button, FlatList, Image, TouchableHighlight, Text, View,  ImageBackground} from 'react-native';
+import {
+    Alert,
+    Button,
+    FlatList,
+    Image,
+    TouchableHighlight,
+    Text,
+    View,
+    ImageBackground,
+    TouchableOpacity,
+} from 'react-native';
 import axios from 'axios';
 import {BackHandler} from 'react-native';
 import {showAlert} from '../../Utils';
@@ -7,6 +17,8 @@ import MapView from 'react-native-maps';
 import {styleCategory} from './styles';
 import {SearchBar} from 'react-native-elements';
 import {images} from './styles';
+import styles from '../Home/styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 export default class CategoryView extends Component {
     constructor(props) {
         super(props);
@@ -80,35 +92,41 @@ export default class CategoryView extends Component {
     render() {
         const {search} = this.state;
         return (
-            <View>
-                <SearchBar
-                    containerStyle={{
-                        backgroundColor: 'transparent',
-                        borderBottomColor: 'transparent',
-                        borderTopColor: 'transparent',
+            <View style={styleCategory.container}>
+                <View style={styleCategory.headerContainer}>
+                    <TouchableOpacity style={styles.bottomView}>
+                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40} onPress={() => this.props.navigation.navigate({name:'Draw', key:"HomeScreen"})}/>
+                    </TouchableOpacity>
+                    <SearchBar
+                        containerStyle={{
+                            backgroundColor: 'transparent',
+                            borderBottomColor: 'transparent',
+                            borderTopColor: 'transparent',
+                            width:'85%'
 
 
-                    }}
-                    inputContainerStyle={{
-                        backgroundColor: '#EDEDED',
-                    }}
-                    inputStyle={{
-                        backgroundColor: '#EDEDED',
-                        borderRadius: 10,
-                        color: 'black',
-                    }}
+                        }}
+                        inputContainerStyle={{
+                            backgroundColor: '#EDEDED',
+                        }}
+                        inputStyle={{
+                            backgroundColor: '#EDEDED',
+                            borderRadius: 10,
+                            color: 'black',
+                        }}
 
-                    clearIcon
-                    //lightTheme
-                    round
-                    searchIcon
+                        clearIcon
+                        //lightTheme
+                        round
+                        searchIcon
 
-                    placeholder="Search..."
-                    onChangeText={this.updateSearch}
-                    value={search}
-                    // onSubmitEditing={()}
-                    // autoCapitalize={}
-                />
+                        placeholder="Search..."
+                        onChangeText={this.updateSearch}
+                        value={search}
+                        // onSubmitEditing={()}
+                        // autoCapitalize={}
+                    />
+                </View>
                 <FlatList
                     data={this.state.matches}
                     renderItem={this.renderCategory}

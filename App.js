@@ -37,7 +37,7 @@ export default class App extends Component {
                                inactiveTintColor: '#2d333b',
                                activeTintColor: '#ceecf9',
                                style: {
-                                   backgroundColor: '#bb9d84',
+                                   backgroundColor: 'rgb(213,133,0)',
                                },
                            }}>
                 <Tab.Screen name="HomeTAB" options={{
@@ -104,7 +104,7 @@ export default class App extends Component {
 
 
     render() {
-        axios.defaults.baseURL = 'http://192.168.1.104:8000/';
+        axios.defaults.baseURL = 'http://192.168.1.246:8000/';
         axios.defaults.timeout = 1500;
         return (
             <NavigationContainer>

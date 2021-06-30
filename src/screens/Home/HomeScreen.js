@@ -1,6 +1,18 @@
 import React from 'react';
-import {FlatList, ScrollView, Text, View, TouchableHighlight, Image, BackHandler, Alert,ImageBackground} from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import {
+    FlatList,
+    Button,
+    ScrollView,
+    Text,
+    View,
+    TouchableHighlight,
+    Image,
+    BackHandler,
+    Alert,
+    ImageBackground,
+    TouchableOpacity,
+} from 'react-native';
+import {Icon, SearchBar} from 'react-native-elements';
 import styles from './styles';
 import {styleCategory} from '../components/styles';
 import {images} from '../components/styles';
@@ -87,8 +99,8 @@ export default class HomeScreen extends React.Component {
     };
 
   renderRecipes = ({item}) => (
-    <TouchableHighlight underlayColor={"#ceecf9"} onPress={() => this.onPressComponent(item)} >
-      <View style={styles.container}>
+    <TouchableHighlight style={styles.container} underlayColor={"#ceecf9"} onPress={() => this.onPressComponent(item)} >
+      <View >
             <Image style={styles.photo} source={images[item.id].uri}/>
         <Text style={styles.title}>{item.title}</Text>
       </View>

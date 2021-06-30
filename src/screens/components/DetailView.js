@@ -1,5 +1,16 @@
 import React, {Component} from "react";
-import {Alert, Animated, Easing, FlatList, Image, TouchableHighlight, Text, View, ImageBackground} from 'react-native';
+import {
+    Alert,
+    Animated,
+    Easing,
+    FlatList,
+    Image,
+    TouchableHighlight,
+    Text,
+    View,
+    ImageBackground,
+    TouchableOpacity,
+} from 'react-native';
 import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from '../../Utils';
@@ -8,6 +19,9 @@ import {images, ProductCard, styleCategory} from './styles';
 import {getCurrentTimestamp} from "react-native/Libraries/Utilities/createPerformanceLogger";
 import Geolocation from 'react-native-geolocation-service';
 import {styleDetail} from './styles';
+import styles from '../Home/styles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {SearchBar} from 'react-native-elements';
 
 const LATITUDE_DELTA = 0.5;
 const LONGITUDE_DELTA = 0.5;
@@ -180,7 +194,12 @@ export default class ProductsView extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styleCategory.container}>
+          <View  style={styleCategory.headerContainer}>
+            <TouchableOpacity style={styles.bottomView}>
+                <MaterialCommunityIcons name="home" color={'#EDEDED'} size={50} onPress={() => this.props.navigation.navigate({name:'Draw', key:"HomeScreen"})}/>
+            </TouchableOpacity>
+          </View>
           <View style={styleDetail.topPhotoContainer}>
               <ImageBackground style={styleCategory.categoriesPhoto} source={images[this.props.route.params.category].uri} >
                   <Text style={styleCategory.categoriesName}>{this.state.name}{"\n"}{this.state.description}</Text>

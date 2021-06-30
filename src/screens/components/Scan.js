@@ -208,9 +208,9 @@ export default class Scan extends Component {
                 {/*<TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>*/}
                 {/*    <Text style={styleScan.buttonText}>Take Photo</Text>*/}
                 {/*</TouchableOpacity>*/}
-                <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.onSelectImage()}>
-                    <Text style={styleScan.buttonText}>Take Image</Text>
-                </TouchableOpacity>
+                {/*<TouchableOpacity style={styleScan.loginBtn} onPress={() => this.onSelectImage()}>*/}
+                {/*    <Text style={styleScan.buttonText}>Take Image</Text>*/}
+                {/*</TouchableOpacity>*/}
 
             </View>
         );

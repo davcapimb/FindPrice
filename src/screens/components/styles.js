@@ -227,14 +227,15 @@ const styleScan = StyleSheet.create({
 });
 const styleDetail = StyleSheet.create({
     topPhotoContainer:{
-        marginTop:"5%",
+        // marginTop:"5%",
         width:"80%",
-        height:"20%",
+        height:"16%",
         marginLeft:"10%",
         borderColor:"#000000",
         borderRadius:20,
         overflow: 'hidden',
-        backgroundColor:"#000000"
+        backgroundColor:"#000000",
+        marginTop:-22,
     },
 
     flatContainer:{
@@ -319,7 +320,7 @@ const styleCategory = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFFFFF',
-    backgroundColor:'#000000a0',
+    backgroundColor:'rgba(54,53,53,0.33)',
       borderRadius: 20,
 
   },

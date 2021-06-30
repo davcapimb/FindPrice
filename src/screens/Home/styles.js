@@ -20,7 +20,10 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
   bottomView:{
-
+      flex:1,
+      height: 40,
+      width: 40,
+      marginRight:'5%'
 
   },
   logoView:{
