@@ -10,10 +10,6 @@ const styles = StyleSheet.create({
       height:"100%",
       width: "100%",
       backgroundColor:"#2d333b",
-
-
-
-
   },
 
     imageInCard:{
@@ -36,7 +32,7 @@ const styles = StyleSheet.create({
   logo: {
         fontWeight: "bold",
         fontSize: 50,
-        color: "#bb9d84",
+        color: "#rgb(213,133,0)",
         marginBottom: 40,
         alignItems: 'center',
     },

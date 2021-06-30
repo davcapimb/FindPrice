@@ -35,7 +35,7 @@ export default class App extends Component {
             <Tab.Navigator initialRouteName="Feed"
                            tabBarOptions={{
                                inactiveTintColor: '#2d333b',
-                               activeTintColor: '#ceecf9',
+                               activeTintColor: '#EDEDED',
                                style: {
                                    backgroundColor: 'rgb(213,133,0)',
                                },

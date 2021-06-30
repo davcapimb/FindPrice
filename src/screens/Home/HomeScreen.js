@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import {Icon, SearchBar} from 'react-native-elements';
 import styles from './styles';
-import {styleCategory} from '../components/styles';
+import {styleCategory, styleScan} from '../components/styles';
 import {images} from '../components/styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -23,6 +23,7 @@ import {styleLogin} from '../Account/styles';
 // import DrawerActions from 'react-navigation';
 // import { getCategoryName } from '../../data/MockDataAPI';
 import {RecipeCard} from '../../AppStyles';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const DATA = [
   {
     id:"ScanTAB",
@@ -128,9 +129,11 @@ export default class HomeScreen extends React.Component {
           renderItem={this.renderRecipes}
           keyExtractor={item => `${item.id}`}
         />
+
       </View>
-            <View style={styles.bottomView}>
-            </View>
+
+
+
         </View>
     );
   }

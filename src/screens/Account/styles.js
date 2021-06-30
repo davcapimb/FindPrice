@@ -3,19 +3,19 @@ import {StyleSheet} from 'react-native';
 const styleLogin = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#003f5c',
+        backgroundColor: '#2d333b',
         alignItems: 'center',
         justifyContent: 'center',
     },
     logo: {
         fontWeight: "bold",
         fontSize: 50,
-        color: "#bb9d84",
+        color: "#rgb(213,133,0)",
         marginBottom: 40
     },
     inputView: {
         width: "80%",
-        backgroundColor: "#ceecf9",
+        backgroundColor: "#EDEDED",
         borderRadius: 25,
         height: 50,
         marginBottom: 20,
@@ -27,12 +27,12 @@ const styleLogin = StyleSheet.create({
         color: "#003f5c"
     },
     forgot: {
-        color: "#ceecf9",
+        color: "#EDEDED",
         fontSize: 11
     },
     loginBtn: {
         width: "80%",
-        backgroundColor: "#bb9d84",
+        backgroundColor: "#rgb(213,133,0)",
         borderRadius: 25,
         height: 50,
         alignItems: "center",
@@ -55,12 +55,12 @@ const styleRegister = StyleSheet.create({
     logo: {
         fontWeight: "bold",
         fontSize: 50,
-        color: "#bb9d84",
+        color: "#rgb(213,133,0)",
         marginBottom: 40
     },
     inputView: {
         width: "80%",
-        backgroundColor: "#ceecf9",
+        backgroundColor: "#EDEDED",
         borderRadius: 25,
         height: 50,
         marginBottom: 20,
@@ -72,12 +72,12 @@ const styleRegister = StyleSheet.create({
         color: "#003f5c"
     },
     forgot: {
-        color: "#ceecf9",
+        color: "#EDEDED",
         fontSize: 11
     },
     loginBtn: {
         width: "80%",
-        backgroundColor: "#bb9d84",
+        backgroundColor: "#rgb(213,133,0)",
         borderRadius: 25,
         height: 50,
         alignItems: "center",
@@ -86,7 +86,7 @@ const styleRegister = StyleSheet.create({
         marginBottom: 10
     },
     loginText: {
-        color: "#ceecf9"
+        color: "#EDEDED"
     }
 });
 

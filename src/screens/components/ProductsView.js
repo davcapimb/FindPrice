@@ -14,10 +14,8 @@ import axios from "axios";
 import {BackHandler} from "react-native";
 import {showAlert} from "../../Utils";
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {ProductCard, styleCategory} from './styles';
+import {ProductCard, styleCategory,images, styleProduct} from './styles';
 import {SearchBar} from 'react-native-elements';
-import {images} from './styles';
-import {styleProduct} from './styles';
 import Geolocation from 'react-native-geolocation-service';
 import styles from '../Home/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -109,14 +107,13 @@ export default class ProductsView extends Component {
   renderProduct = ({ item }) => (
 
 
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressProduct(item)}>
+    <TouchableHighlight style={ProductCard.container} underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressProduct(item)}>
 
-      <View style={ProductCard.container}>
+
 
         {/*<Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />*/}
         <Text style={ProductCard.title}>{item.name}</Text>
 
-      </View>
     </TouchableHighlight>
   );
 

@@ -136,14 +136,14 @@ const styleScan = StyleSheet.create({
     logo: {
         fontWeight: "bold",
         fontSize: 30,
-        color: "#bb9d84",
+        color: "#rgb(213,133,0)",
         marginBottom: 40
     },
     inputView: {
         flexDirection: 'row',
         alignItems: 'center',
         width: "80%",
-        backgroundColor: "#ceecf9",
+        backgroundColor: "#EDEDED",
         borderRadius: 25,
         height: 50,
         marginBottom: 20,
@@ -167,12 +167,12 @@ const styleScan = StyleSheet.create({
         color: "#000910"
     },
     forgot: {
-        color: "#ceecf9",
+        color: "#EDEDED",
         fontSize: 11
     },
     loginBtn: {
         width: "80%",
-        backgroundColor: "#bb9d84",
+        backgroundColor: "#rgb(213,133,0)",
         borderRadius: 25,
         height: 50,
         alignItems: "center",
@@ -181,7 +181,7 @@ const styleScan = StyleSheet.create({
         marginBottom: 10
     },
     loginText: {
-        color: "#ceecf9"
+        color: "#EDEDED"
     },
     image: {
         height: 300,
@@ -196,7 +196,7 @@ const styleScan = StyleSheet.create({
     },
         dropdownViewStyle: {
         width: "80%",
-        backgroundColor: "#ceecf9",
+        backgroundColor: "#EDEDED",
         borderRadius: 30,
         height: 60,
         marginBottom: 20,
@@ -212,7 +212,7 @@ const styleScan = StyleSheet.create({
     },
     dropdownStyle: {
         flex: 1,
-        color:"#bb9d84",
+        color:"#rgb(213,133,0)",
         width: '60%',
         marginVertical: 10,
         borderWidth: 1,
@@ -289,31 +289,35 @@ const styleProduct = StyleSheet.create({
     },
 })
 const styleCategory = StyleSheet.create({
-    categoriesItemContainer: {
-    flex: 1,
-    margin: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 180,
-    borderColor: '#cccccc',
-    borderWidth: 0.5,
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  categoriesPhoto: {
-    width: '100%',
-    height: '100%',
-
-
-    shadowColor: 'blue',
-    shadowOffset: {
-      width: 0,
-      height: 3
+    container: {
+        backgroundColor: '#2d333b',
+        height: '100%',
     },
-    shadowRadius: 5,
-    shadowOpacity: 1.0,
+    categoriesItemContainer: {
+        flex: 1,
+        margin: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 180,
+        borderColor: '#cccccc',
+        borderWidth: 0.5,
+        borderRadius: 20,
+        overflow: 'hidden',
+      },
+    categoriesPhoto: {
+        width: '100%',
+        height: '100%',
 
-  },
+
+        shadowColor: 'blue',
+        shadowOffset: {
+          width: 0,
+          height: 3
+        },
+        shadowRadius: 5,
+        shadowOpacity: 1.0,
+
+      },
   categoriesName: {
     flex: 1,
     fontSize: 20,
@@ -327,7 +331,15 @@ const styleCategory = StyleSheet.create({
   categoriesInfo: {
     marginTop: 3,
     marginBottom: 5
-  }
+  },
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: "100%",
+        height: 60,
+        marginBottom: 20,
+        padding: 20
+    },
 });
 
 
@@ -351,27 +363,23 @@ const ProductCard = StyleSheet.create({
     marginRight: RECIPE_ITEM_MARGIN,
     marginTop: 10,
     width: "80%",
-    height: "10%",
-    borderColor: '#cccccc',
+    height: "40%",
+    borderColor: 'rgba(54,53,53,1)',
     borderWidth: 0.5,
-    borderRadius: 15
-  },
-  photo: {
-    width: (SCREEN_WIDTH - (recipeNumColums + 1) * RECIPE_ITEM_MARGIN) / recipeNumColums,
-    height: RECIPE_ITEM_HEIGHT,
     borderRadius: 15,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0
+      backgroundColor: '#EDEDED'
   },
+
   title: {
     flex: 1,
     fontSize: 17,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#444444',
-    marginTop: 3,
+    color: 'rgba(54,53,53,1)',
     marginRight: 5,
     marginLeft: 5,
+      marginTop:8,
+      marginBottom:8,
   },
   category: {
     marginTop: 5,

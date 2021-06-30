@@ -14,7 +14,7 @@ const RECIPE_ITEM_MARGIN = 5;
 export const RecipeCard = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor:"#ceecf9",
+    backgroundColor:"#EDEDED",
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',

@@ -164,16 +164,7 @@ export default class ProductsView extends Component {
         this.setState({markers:marks});
   };
 
-  renderScan = ({ item }) => (
-    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressScan(item)}>
-      <View style={ProductCard.container}>
-        {/*<Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />*/}
-          <Text style={ProductCard.title}>{item.scan_time}</Text>
-          <Text style={ProductCard.title}>{item.price}</Text>
 
-      </View>
-    </TouchableHighlight>
-  );
 
    onRegionChange(region) {
         this.setState({ region });
@@ -190,7 +181,18 @@ export default class ProductsView extends Component {
            this.getProdScan(true)
        }
 
-    }
+   }
+   renderScan = ({ item }) => (
+    <TouchableHighlight underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressScan(item)}>
+      <View style={ProductCard.container}>
+        {/*<Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />*/}
+          <Text style={ProductCard.title}>
+              {new Date(item.scan_time).toLocaleDateString()}   {new Date(item.scan_time).toLocaleTimeString()}{'\n'}
+              € {item.price}
+          </Text>
+      </View>
+    </TouchableHighlight>
+  );
 
   render() {
     return (
