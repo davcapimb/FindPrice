@@ -19,11 +19,12 @@ class Map extends Component {
         markers:[],
     }
 
+
     setRegion(region) {
         this.setState({ region });
     }
 
-    getCurrentPosition() {
+    getCurrentPosition (){
         try {
           Geolocation.getCurrentPosition(
             (position) => {
@@ -50,6 +51,7 @@ class Map extends Component {
         }
       };
 
+
     componentDidMount() {
         this.setState({region:this.getCurrentPosition()})
         let marks = [];
@@ -66,7 +68,6 @@ class Map extends Component {
                     }
                     marks.push(mark)
                 })
-                console.log(marks)
                 this.setState({markers: marks});
             })
             .catch(error => {

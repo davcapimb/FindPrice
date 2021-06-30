@@ -1,6 +1,7 @@
 import {Alert} from "react-native";
+import Geolocation from 'react-native-geolocation-service';
 
-export const showAlert = (err, msg) =>
+const showAlert = (err, msg) =>
     Alert.alert(
         "Error " + err,
         msg,
@@ -11,3 +12,7 @@ export const showAlert = (err, msg) =>
             },
         ],
     );
+
+
+
+export {showAlert}

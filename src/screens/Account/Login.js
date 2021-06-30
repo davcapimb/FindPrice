@@ -46,6 +46,7 @@ export default class Login extends Component {
                 axios.defaults.headers.common['Authorization'] = 'Token ' + token;
                 // this.userInput.clear();
                 this.passInput.clear();
+                this.setState({password:''});
                 (async ()=>{await AsyncStorage.setItem("id_token",token)
                     this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});})()
 
