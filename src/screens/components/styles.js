@@ -99,9 +99,6 @@ const styleAddProduct = StyleSheet.create({
         alignSelf: 'center',
     },
 });
-
-
-
 const stylelist_view = StyleSheet.create({
     center: {
         flex: 1,
@@ -129,7 +126,6 @@ const stylelist_view = StyleSheet.create({
         fontSize: 20,
     }
 });
-
 const styleScan = StyleSheet.create({
     container: {
         flex: 1,
@@ -139,22 +135,36 @@ const styleScan = StyleSheet.create({
     },
     logo: {
         fontWeight: "bold",
-        fontSize: 50,
+        fontSize: 30,
         color: "#bb9d84",
         marginBottom: 40
     },
     inputView: {
+        flexDirection: 'row',
+        alignItems: 'center',
         width: "80%",
         backgroundColor: "#ceecf9",
         borderRadius: 25,
         height: 50,
         marginBottom: 20,
-        justifyContent: "center",
         padding: 20
     },
+    icon:{
+        aspectRatio: 1,
+        height: '15%',
+        width: '15%',
+
+    },
+    button: {
+        flex:1,
+        justifyContent:'flex-end',
+        flexDirection: 'row',
+        marginRight:0,
+    },
     inputText: {
+        flex:1,
         height: 50,
-        color: "#003f5c"
+        color: "#000910"
     },
     forgot: {
         color: "#ceecf9",
@@ -215,8 +225,6 @@ const styleScan = StyleSheet.create({
         justifyContent: 'center'
     },
 });
-
-
 const styleDetail = StyleSheet.create({
     topPhotoContainer:{
         marginTop:"5%",
@@ -267,7 +275,6 @@ const styleDetail = StyleSheet.create({
    ...StyleSheet.absoluteFillObject,
  },
 })
-
 const styleProduct = StyleSheet.create({
     topPhotoContainer:{
         marginTop:"5%",
@@ -394,13 +401,13 @@ const images = {
       uri: require('../../../assets/ScanTAB.png')
     },
     MapTAB:{
-      uri: require('../../../assets/MapTAB.jpg')
+      uri: require('../../../assets/MapTAB.png')
     },
     ProductTAB:{
-      uri: require('../../../assets/ProductTAB.jpg')
+      uri: require('../../../assets/ProductTAB.png')
     },
     ListView:{
-      uri: require('../../../assets/ListView.jpg')
+      uri: require('../../../assets/ListView.png')
     },
     Marker:{
       uri: require('../../../assets/marker.png')

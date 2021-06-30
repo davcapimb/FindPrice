@@ -1,12 +1,12 @@
 import React, {Component, useState} from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Image, PermissionsAndroid, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image, PermissionsAndroid, Text, TextInput, TouchableOpacity, View} from 'react-native';
 import axios from 'axios';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
 import {showAlert} from '../../Utils';
-import {styleScan} from './styles';
+import {images, styleScan} from './styles';
 
 export default class Scan extends Component {
     state = {
@@ -39,7 +39,6 @@ export default class Scan extends Component {
                     showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
                 },
             );
-
         (async () => {
             try {
                 const granted = await PermissionsAndroid.request(
@@ -84,6 +83,7 @@ export default class Scan extends Component {
                     const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
                     console.log('priceRecognized: ', priceRecognized);
                     this.setState({result: priceRecognized});
+                    await this.onTakePrice();
                 }
             },
         );
@@ -167,7 +167,7 @@ export default class Scan extends Component {
         return (
             <View style={styleScan.container}>
                 {/*<LOGO width="130" height="130"/>*/}
-                <Text style={styleScan.logo}>FindPrice</Text>
+                <Text style={styleScan.logo}>Add Scan</Text>
                 <View style={styleScan.dropdownViewStyle}>
                     <ModalDropdown
                         placeholder="Select a product"
@@ -193,15 +193,22 @@ export default class Scan extends Component {
                         }}
                         onChangeText={this.onPriceChange.bind(this)}
                     />
+                    <TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>
+                        <Image style={styleScan.icon} source={images['ScanTAB'].uri} />
+                    </TouchableOpacity>
+                    {/*<TouchableOpacity style={styleScan.button} onPress={() => this.onSelectImage()}>*/}
+                    {/*    <Image style={styleScan.icon} source={images['ScanTAB'].uri}/>*/}
+                    {/*</TouchableOpacity>*/}
+
                 </View>
-                <TouchableOpacity style={styleScan.loginBtn}>
-                    <Text style={styleScan.loginText} onPress={() => this.handleScan()}>Add scan</Text>
+                <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.handleScan()}>
+                    <Text style={styleScan.loginText}>Add scan</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>
-                    <Text style={styleScan.buttonText}>Take Photo</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styleScan.button} onPress={() => this.onSelectImage()}>
+                {/*<TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>*/}
+                {/*    <Text style={styleScan.buttonText}>Take Photo</Text>*/}
+                {/*</TouchableOpacity>*/}
+                <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.onSelectImage()}>
                     <Text style={styleScan.buttonText}>Take Image</Text>
                 </TouchableOpacity>
 

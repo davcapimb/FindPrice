@@ -87,11 +87,10 @@ export default class HomeScreen extends React.Component {
     };
 
   renderRecipes = ({item}) => (
-    <TouchableHighlight underlayColor={"#ceecf9"} onPress={() => this.onPressComponent(item)} style={styles.container}>
-      <View >
-            <ImageBackground style={RecipeCard.photo} source={images[item.id].uri} >
+    <TouchableHighlight underlayColor={"#ceecf9"} onPress={() => this.onPressComponent(item)} >
+      <View style={styles.container}>
+            <Image style={styles.photo} source={images[item.id].uri}/>
         <Text style={styles.title}>{item.title}</Text>
-            </ImageBackground>
       </View>
 
     </TouchableHighlight>
