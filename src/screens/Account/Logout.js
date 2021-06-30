@@ -8,8 +8,8 @@ class Logout extends Component {
         super(props);
     }
     render() {
-        (async ()=>{await AsyncStorage.clear()
-                    this.props.navigation.navigate('Login');})()
+        (async ()=>{ await AsyncStorage.clear();
+                     this.props.navigation.navigate('Login');})()
 
         return null;
     }
