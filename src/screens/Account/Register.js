@@ -82,7 +82,7 @@ class Register extends Component {
                             this.userInput = input
                         }}
 
-                        onChangeText={this.onUsernameChange.bind(this)}
+                        onChangeText={this.onEmailChange.bind(this)}
                     />
                 </View>
                 <TouchableOpacity style={styleLogin.loginBtn} onPress={() => this.handleRegister()}>
