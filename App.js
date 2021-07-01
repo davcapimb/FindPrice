@@ -19,6 +19,7 @@ import {SafeAreaView} from 'react-navigation';
 import {Button, TouchableOpacity, ScrollView, Text, StyleSheet} from 'react-native';
 import AddProduct from './src/screens/components/AddProduct';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ResetPsw from './src/screens/Account/ResetPsw';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -148,6 +149,10 @@ export default class App extends Component {
 
                     <Stack.Screen name="DetailView">
                         {props => <DetailView{...props} />}
+                    </Stack.Screen>
+
+                    <Stack.Screen name="ResetPsw">
+                        {props => <ResetPsw{...props} />}
                     </Stack.Screen>
 
                 </Stack.Navigator>

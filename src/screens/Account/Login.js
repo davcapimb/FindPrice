@@ -96,7 +96,7 @@ export default class Login extends Component {
                         onChangeText={this.onPasswordChange.bind(this)}
                     />
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate("ResetPsw")}>
                     <Text style={styleLogin.forgot}>Forgot Password?</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styleLogin.loginBtn} onPress={() => this.handleLogin()}>
