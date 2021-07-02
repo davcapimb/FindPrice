@@ -16,7 +16,9 @@ class Map extends Component {
           latitudeDelta: 0,
           longitudeDelta: 0,
         },
+        datetime:new Date(),
         markers:[],
+        products:[],
     }
 
 
@@ -53,32 +55,73 @@ class Map extends Component {
 
 
     componentDidMount() {
+
         this.setState({region:this.getCurrentPosition()})
-        let marks = [];
-        let mark = {};
-        axios.get('api/v1/scans')
+        let prods= [];
+        axios.get('api/v1/prodFilt')
             .then(response => {
-                response.data.map((product,key) => {
-                    mark = {
-                        id: key,
-                        coordinate:{
-                            latitude:parseFloat(product.lat),
-                            longitude:parseFloat(product.long)
-                        }
-                    }
-                    marks.push(mark)
+                response.data.map((option) => {
+                    prods[option.id]= option.product_name;
+                    // prods.push(
+                    //     {
+                    //         id:option.id,
+                    //         name:option.product_name
+                    //
+                    //     }
+                    // );
                 })
-                this.setState({markers: marks});
-            })
-            .catch(error => {
-                    showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
-                }
-            );
+                this.setState({products: prods});
+          })
+          .catch(error => {
+              console.log("error")
+                  // for (const keys of Object.keys(error.response.data)){
+                  //       showAlert(keys, error.response.data[keys].toString());
+                // }
+              }
+          );
 
     }
 
+    getProdScan(){
+        let marks= [];
+        let dt = new Date();
+        this.setState({datetime:dt});
+        axios.get("api/v1/prodScan?filter={" +
+            "\"lat\":\""+this.state.region.latitude+"\"," +
+            "\"long\":\""+this.state.region.longitude+"\"," +
+            "\"id\":\"*\"," +
+            "\"dt\":\""+ this.state.datetime.toISOString() +"\"" +
+            "}")
+            .then(response => {
+                response.data.map((option, key) => {
+                    marks.push(
+                        {
+                            id:option.product,
+                            key:option.id,
+                            coordinate:{
+                                latitude:parseFloat(option.lat),
+                                longitude:parseFloat(option.long)
+                            },
+                            price: option.price,
+                            prod_name: this.state.products[option.product]
+                        }
+                    );
+
+                })
+                this.setState({markers: marks})
+            })
+            .catch(error => {
+                console.log(error)
+                // for (const keys of Object.keys(error.response.data)){
+                //     showAlert(keys, error.response.data[keys].toString());
+
+            }
+            );
+  }
+
     onRegionChange(region) {
       this.setState({ region });
+      this.getProdScan();
     }
 
     render() {
@@ -93,10 +136,10 @@ class Map extends Component {
               >
                   {this.state.markers.map((marker) => (
                     <Marker
-                      key={marker.id}
+                      key={marker.key}
                       coordinate={marker.coordinate}
-                      // title={"ciao"}
-                      // description={"ueeee"}
+                      title={marker.prod_name}
+                      description={marker.price}
                     />
                   ))}
               </MapView>
@@ -117,8 +160,8 @@ const styles = StyleSheet.create({
     },
     container: {
    ...StyleSheet.absoluteFillObject,
-   height: 650,
-   width: 400,
+   height: "100%",
+   width: "100%",
    justifyContent: 'flex-end',
    alignItems: 'center',
  },

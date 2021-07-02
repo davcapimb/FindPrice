@@ -42,7 +42,6 @@ export default class Login extends Component {
         axios.post('api/v1/token/login', payload)
             .then(response => {
                 const token = response.data.auth_token;
-                console.log(token);
                 axios.defaults.headers.common['Authorization'] = 'Token ' + token;
                 // this.userInput.clear();
                 this.passInput.clear();
@@ -55,14 +54,7 @@ export default class Login extends Component {
                 for (const keys of Object.keys(error.response.data)){
                         showAlert(keys, error.response.data[keys].toString());
                 }
-                    })
-                    //     console.log(response)
-                    //     (error, respons);
-                    //
-                    // }
-                    // )
-                // }
-            // );
+            })
     }
 
     render() {

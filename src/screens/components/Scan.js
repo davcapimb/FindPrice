@@ -57,7 +57,6 @@ export default class Scan extends Component {
                 if (granted) {
                     Geolocation.getCurrentPosition(
                         (position) => {
-                            console.log(position);
                             this.setState({lat: position.coords.latitude, long: position.coords.longitude});
                         },
                         (error) => {
@@ -81,7 +80,6 @@ export default class Scan extends Component {
                 if (!media.didCancel) {
                     this.setState({image: media.assets[0].uri});
                     const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-                    console.log('priceRecognized: ', priceRecognized);
                     this.setState({result: priceRecognized});
                     await this.onTakePrice();
                 }
@@ -94,7 +92,6 @@ export default class Scan extends Component {
                 if (!media.didCancel) {
                     this.setState({image: media.assets[0].uri});
                     const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-                    console.log('priceRecognized: ', priceRecognized);
                     this.setState({result: priceRecognized});
                     await this.onTakePrice();
                 }
@@ -111,7 +108,6 @@ export default class Scan extends Component {
             temp = box.blockText.match(reg1);
             if (temp != undefined) {
                 current_price = box.blockText.match(reg1);
-                console.log(current_price);
 
             }
         });
@@ -120,11 +116,9 @@ export default class Scan extends Component {
                 temp = box.blockText.match(reg2);
                 if (temp != undefined) {
                     current_price = box.blockText.match(reg2);
-                    console.log(current_price);
                 }
             });
         }
-        console.log('current price', current_price);
         current_price[0] = current_price[0].replace(/,/g, '.');
         current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
         this.setState({price: current_price[0]});
