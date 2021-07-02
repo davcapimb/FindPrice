@@ -53,7 +53,7 @@ class AddProduct extends Component {
             .then(response => {
                 this.descInput.clear();
                 this.prodInput.clear();
-                this.props.navigation.navigate('AddProduct');
+                this.props.navigation.navigate({name:'Tab', key:'AddProduct'});
             })
             .catch(error => {
                     for (const keys of Object.keys(error.response.data)){
