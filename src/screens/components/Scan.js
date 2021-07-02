@@ -7,6 +7,7 @@ import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
 import {showAlert} from '../../Utils';
 import {images, styleScan} from './styles';
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 export default class Scan extends Component {
     state = {
@@ -74,6 +75,23 @@ export default class Scan extends Component {
         })();
     };
 
+    reloadProducts (){
+        var prods = [];
+        var prod_name = [];
+        axios.get('api/v1/products/')
+            .then(response => {
+                response.data.map((option, key) => {
+                    prods.push(option);
+                    prod_name.push(option.product_name);
+                });
+                this.setState({prod_ids: prods});
+                this.setState({options: prod_name});
+            })
+            .catch(error => {
+                    showAlert(JSON.stringify(Object.keys(error.response.data)).split('["').pop().split('"]')[0], JSON.stringify(Object.values(error.response.data)).split('["').pop().split('.')[0]);
+                },
+            );
+    }
 
     onTakePhoto = () => {
         launchCamera({mediaType: 'image'}, async (media) => {
@@ -176,6 +194,10 @@ export default class Scan extends Component {
                         dropdownStyle={styleScan.dropdownStyle}
                         style={styleScan.styledrop}
                     />
+                    <TouchableOpacity style={styleScan.button} onPress={() => this.reloadProducts()}>
+                        <MaterialCommunityIcons name="reload" color={'#474747FF'} size={20}/>
+                        {/*<Image style={styleScan.icon} source={images['ScanTAB'].uri} />*/}
+                    </TouchableOpacity>
                 </View>
                 <View style={styleScan.inputView}>
                     <TextInput
@@ -195,6 +217,7 @@ export default class Scan extends Component {
                     {/*</TouchableOpacity>*/}
 
                 </View>
+
                 <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.handleScan()}>
                     <Text style={styleScan.loginText}>Add scan</Text>
                 </TouchableOpacity>

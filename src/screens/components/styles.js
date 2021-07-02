@@ -195,12 +195,13 @@ const styleScan = StyleSheet.create({
         color: '#000000'
     },
         dropdownViewStyle: {
+        flexDirection: 'row',
+        alignItems: 'center',
         width: "80%",
         backgroundColor: "#EDEDED",
-        borderRadius: 30,
+        borderRadius: 25,
         height: 60,
         marginBottom: 20,
-        justifyContent: "center",
         padding: 20
     },
     textStyle: {

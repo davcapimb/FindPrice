@@ -91,12 +91,8 @@ export default class App extends Component {
                 <Drawer.Screen name="ListView">
                     {props => <CategoryView {...props} />}
                 </Drawer.Screen>
-                <Drawer.Screen name="New scan" component={Scan}/>
                 <Drawer.Screen name="Logout">
                     {props => <Logout {...props} />}
-                </Drawer.Screen>
-                <Drawer.Screen name="HomeScreen">
-                    {props => <HomeScreen {...props} />}
                 </Drawer.Screen>
 
             </Drawer.Navigator>
