@@ -65,12 +65,6 @@ class AddProduct extends Component {
 
 
     render() {
-        const {
-            formContainerStyle,
-            textInputStyle,
-            buttonContainerStyle,
-        } = styleAddProduct;
-
         return (
             <View style={styleScan.container}>
                 <Text style={styleScan.logo}>Add Product</Text>
