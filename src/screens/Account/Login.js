@@ -20,7 +20,7 @@ export default class Login extends Component {
             if(token){
                 await AsyncStorage.setItem("id_token",token)
                 axios.defaults.headers.common['Authorization'] = 'Token ' + token;
-                this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});
+                this.props.navigation.navigate({name:'Draw', key:"Tab"});
             }
             else return null;
         })()
