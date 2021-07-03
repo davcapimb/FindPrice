@@ -101,7 +101,7 @@ export default class App extends Component {
 
 
     render() {
-        axios.defaults.baseURL = 'http://findprice.pythonanywhere.com';
+        axios.defaults.baseURL = 'https://findprice.pythonanywhere.com';
         axios.defaults.timeout = 1500;
         return (
             <NavigationContainer>

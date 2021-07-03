@@ -10,7 +10,7 @@ import {
     BackHandler,
     Alert,
     ImageBackground,
-    TouchableOpacity,
+    TouchableOpacity, PermissionsAndroid,
 } from 'react-native';
 import {Icon, SearchBar} from 'react-native-elements';
 import styles from './styles';
@@ -24,6 +24,8 @@ import {styleLogin} from '../Account/styles';
 // import { getCategoryName } from '../../data/MockDataAPI';
 import {RecipeCard} from '../../AppStyles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Geolocation from "react-native-geolocation-service";
+import {showAlert} from "../../Utils";
 const DATA = [
   {
     id:"ScanTAB",
@@ -62,7 +64,23 @@ export default class HomeScreen extends React.Component {
             else{
                 this.props.navigation.navigate("Login")
             }
-        })()
+
+            try {
+                const granted = await PermissionsAndroid.request(
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    {
+                        title: 'FindPrice Location Permission',
+                        message:
+                            'FindPrice needs access to your location.',
+                        buttonNeutral: 'Ask Me Later',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    }
+                );
+            } catch (err) {
+                console.warn(err);
+            }
+        })();
 
     }
     componentDidUpdate() {

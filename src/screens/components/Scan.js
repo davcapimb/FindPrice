@@ -45,14 +45,22 @@ export default class Scan extends Component {
                 const granted = await PermissionsAndroid.request(
                     PermissionsAndroid.PERMISSIONS.CAMERA,
                     {
-                        title: 'Cool Photo App Camera Permission',
+                        title: 'FindPrice Camera Permission',
                         message:
-                            'Cool Photo App needs access to your camera ' +
-                            'so you can take awesome pictures.',
+                            'FindPrice needs access to your camera.',
                         buttonNeutral: 'Ask Me Later',
                         buttonNegative: 'Cancel',
                         buttonPositive: 'OK',
                     },
+                    PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+                    {
+                        title: 'FindPrice Location Permission',
+                        message:
+                            'FindPrice needs access to your location.',
+                        buttonNeutral: 'Ask Me Later',
+                        buttonNegative: 'Cancel',
+                        buttonPositive: 'OK',
+                    }
                 );
 
                 if (granted) {
@@ -98,6 +106,7 @@ export default class Scan extends Component {
                 if (!media.didCancel) {
                     this.setState({image: media.assets[0].uri});
                     const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+                    console.log(priceRecognized);
                     this.setState({result: priceRecognized});
                     await this.onTakePrice();
                 }
@@ -105,17 +114,18 @@ export default class Scan extends Component {
         );
     };
 
-    onSelectImage = () => {
-        launchImageLibrary({mediaType: 'image'}, async (media) => {
-                if (!media.didCancel) {
-                    this.setState({image: media.assets[0].uri});
-                    const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-                    this.setState({result: priceRecognized});
-                    await this.onTakePrice();
-                }
-            },
-        );
-    };
+    // onSelectImage = () => {
+    //     launchImageLibrary({mediaType: 'image'}, async (media) => {
+    //             if (!media.didCancel) {
+    //                 this.setState({image: media.assets[0].uri});
+    //                 const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+    //
+    //                 this.setState({result: priceRecognized});
+    //                 await this.onTakePrice();
+    //             }
+    //         },
+    //     );
+    // };
 
     onTakePrice() {
         const reg1 = /[\$\£\€]+\s*\d+(?:[\.\,]\d{1,2})/;
