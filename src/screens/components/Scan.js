@@ -105,10 +105,15 @@ export default class Scan extends Component {
         launchCamera({mediaType: 'image'}, async (media) => {
                 if (!media.didCancel) {
                     this.setState({image: media.assets[0].uri});
-                    const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
-                    console.log(priceRecognized);
-                    this.setState({result: priceRecognized});
-                    await this.onTakePrice();
+                    try{
+                        const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
+                        this.setState({result: priceRecognized});
+                        await this.onTakePrice();
+                    }
+                    catch (e) {
+                        console.log(e);
+                    }
+
                 }
             },
         );
@@ -130,6 +135,7 @@ export default class Scan extends Component {
     onTakePrice() {
         const reg1 = /[\$\£\€]+\s*\d+(?:[\.\,]\d{1,2})/;
         const reg2 = /[\$\£\€]*\s*\d+(?:[\.\,]\d{1,2})/;
+        const reg3 = /\d+/;
         var current_price = '';
         var temp = '';
         this.state.result.map((box) => {
@@ -147,8 +153,22 @@ export default class Scan extends Component {
                 }
             });
         }
-        current_price[0] = current_price[0].replace(/,/g, '.');
-        current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
+        if (current_price === '') {
+            this.state.result.map((box) => {
+                temp = box.blockText.match(reg3);
+                if (temp != undefined) {
+                    current_price = box.blockText.match(reg3);
+                }
+            });
+        }
+        console.log(current_price[0])
+        if(current_price[0].includes(",")){
+            current_price[0] = current_price[0].replace(/,/g, '.');
+        }
+        if(current_price[0].match(/[\$\£\€]+/) != undefined){
+            current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
+        }
+
         this.setState({price: current_price[0]});
         this.priceInput.setNativeProps({text: current_price[0]});
         return (current_price);
