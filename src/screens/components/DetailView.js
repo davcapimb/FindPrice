@@ -199,7 +199,7 @@ export default class ProductsView extends Component {
       <View style={styleCategory.container}>
           <View  style={styleCategory.headerContainer}>
             <TouchableOpacity style={styles.bottomView}>
-                <MaterialCommunityIcons name="home" color={'#EDEDED'} size={50} onPress={() => this.props.navigation.navigate({name:'Draw', key:"Tab"})}/>
+                <MaterialCommunityIcons name="home" color={'#EDEDED'} size={50} onPress={() => this.props.navigation.navigate({name:'Draw', key:"HomeScreen"})}/>
             </TouchableOpacity>
           </View>
           <View style={styleDetail.topPhotoContainer}>

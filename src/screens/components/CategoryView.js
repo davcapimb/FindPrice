@@ -95,7 +95,7 @@ export default class CategoryView extends Component {
             <View style={styleCategory.container}>
                 <View style={styleCategory.headerContainer}>
                     <TouchableOpacity style={styles.bottomView}>
-                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40} onPress={() => this.props.navigation.navigate({name:'Draw', key:"Tab"})}/>
+                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40} onPress={() => this.props.navigation.navigate({name:'Draw', key:"HomeScreen"})}/>
                     </TouchableOpacity>
                     <SearchBar
                         containerStyle={{
