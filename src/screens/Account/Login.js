@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {StyleSheet, View, TextInput, Text, TouchableOpacity, BackHandler, Alert} from 'react-native';
+import {StyleSheet, View, TextInput, Text, TouchableOpacity, BackHandler, Alert, ToastAndroid} from 'react-native';
 import axios from "axios";
 import {showAlert} from "../../Utils";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -20,7 +20,9 @@ export default class Login extends Component {
             if(token){
                 await AsyncStorage.setItem("id_token",token)
                 axios.defaults.headers.common['Authorization'] = 'Token ' + token;
+                ToastAndroid.show('Welcame back!', ToastAndroid.LONG);
                 this.props.navigation.navigate({name:'Draw', key:"Tab"});
+
             }
             else return null;
         })()
@@ -46,7 +48,10 @@ export default class Login extends Component {
                 // this.userInput.clear();
                 this.passInput.clear();
                 this.setState({password:''});
+                ToastAndroid.show('Welcome '+this.state.username, ToastAndroid.LONG);
+
                 (async ()=>{await AsyncStorage.setItem("id_token",token)
+
                     this.props.navigation.navigate({name:'Draw', key:"HomeScreen"});})()
 
             })

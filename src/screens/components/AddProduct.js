@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Text, TextInput, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {Icon, Button} from 'react-native-elements';
 import {showAlert} from '../../Utils';
@@ -53,6 +53,7 @@ class AddProduct extends Component {
             .then(response => {
                 this.descInput.clear();
                 this.prodInput.clear();
+                ToastAndroid.show('New product added!', ToastAndroid.LONG);
                 this.props.navigation.navigate({name:'Tab', key:'AddProduct'});
             })
             .catch(error => {

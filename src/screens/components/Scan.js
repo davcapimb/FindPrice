@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Image, PermissionsAndroid, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Image, PermissionsAndroid, Text, TextInput, TouchableOpacity, View,ToastAndroid} from 'react-native';
 import axios from 'axios';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Geolocation from 'react-native-geolocation-service';
@@ -106,12 +106,13 @@ export default class Scan extends Component {
                 if (!media.didCancel) {
                     this.setState({image: media.assets[0].uri});
                     try{
+                        ToastAndroid.show('Processing the image...', ToastAndroid.LONG);
                         const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
                         this.setState({result: priceRecognized});
                         await this.onTakePrice();
                     }
                     catch (e) {
-                        console.log(e);
+                            ToastAndroid.show('Error! Try with a better photo', ToastAndroid.SHORT);
                     }
 
                 }
@@ -161,13 +162,13 @@ export default class Scan extends Component {
                 }
             });
         }
-        console.log(current_price[0])
+
         if(current_price[0].includes(",")){
             current_price[0] = current_price[0].replace(/,/g, '.');
         }
-        if(current_price[0].match(/[\$\£\€]+/) != undefined){
-            current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
-        }
+        // if(current_price[0].match(/[\$\£\€]+/) != undefined){
+        //     current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
+        // }
 
         this.setState({price: current_price[0]});
         this.priceInput.setNativeProps({text: current_price[0]});
@@ -192,6 +193,8 @@ export default class Scan extends Component {
         };
         axios.post('api/v1/scans/', payload)
             .then(response => {
+                ToastAndroid.show('New scan added!', ToastAndroid.SHORT);
+                this.priceInput.setNativeProps({placeholder:'Price'});
                 this.props.navigation.navigate('Draw');
 
             })
