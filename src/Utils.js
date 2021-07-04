@@ -1,18 +1,16 @@
-import {Alert} from "react-native";
-import Geolocation from 'react-native-geolocation-service';
+import {Alert} from 'react-native';
 
 const showAlert = (err, msg) =>
     Alert.alert(
-        "Error " + err,
+        'Error ' + err,
         msg,
         [
             {
-                text: "Cancel",
-                style: "cancel",
+                text: 'Cancel',
+                style: 'cancel',
             },
         ],
     );
 
 
-
-export {showAlert}
+export {showAlert};

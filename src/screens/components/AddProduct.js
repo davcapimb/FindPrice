@@ -2,9 +2,8 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import {Text, TextInput, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import ModalDropdown from 'react-native-modal-dropdown';
-import {Icon, Button} from 'react-native-elements';
 import {showAlert} from '../../Utils';
-import {styleAddProduct, styleScan} from './styles';
+import {styleScan} from './styles';
 
 class AddProduct extends Component {
     state = {
@@ -54,13 +53,13 @@ class AddProduct extends Component {
                 this.descInput.clear();
                 this.prodInput.clear();
                 ToastAndroid.show('New product added!', ToastAndroid.LONG);
-                this.props.navigation.navigate({name:'Tab', key:'AddProduct'});
+                this.props.navigation.navigate({name: 'Tab', key: 'AddProduct'});
             })
             .catch(error => {
-                    for (const keys of Object.keys(error.response.data)){
+                    for (const keys of Object.keys(error.response.data)) {
                         showAlert(keys, error.response.data[keys].toString());
-                }
-                    },
+                    }
+                },
             );
     }
 
@@ -70,52 +69,52 @@ class AddProduct extends Component {
             <View style={styleScan.container}>
                 <Text style={styleScan.logo}>Add Product</Text>
 
-                    <View style={styleScan.inputView}>
-                        <TextInput
-                            style={styleScan.inputText}
-                            placeholder="Product Name"
-                            autoCorrect={false}
-                            autoCapitalize="none"
-                            ref={input => {
-                                this.prodInput = input;
-                            }}
-                            onChangeText={this.onProductNameChange.bind(this)}
-                        />
-                    </View>
+                <View style={styleScan.inputView}>
+                    <TextInput
+                        style={styleScan.inputText}
+                        placeholder="Product Name"
+                        autoCorrect={false}
+                        autoCapitalize="none"
+                        ref={input => {
+                            this.prodInput = input;
+                        }}
+                        onChangeText={this.onProductNameChange.bind(this)}
+                    />
+                </View>
 
-                    <View style={styleScan.inputView}>
-                        <TextInput
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            placeholder="Description"
-                            style={styleScan.inputText}
-                            ref={input => {
-                                this.descInput = input;
-                            }}
-                            onChangeText={this.onDescriptionChange.bind(this)}
-                        />
-                    </View>
+                <View style={styleScan.inputView}>
+                    <TextInput
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        placeholder="Description"
+                        style={styleScan.inputText}
+                        ref={input => {
+                            this.descInput = input;
+                        }}
+                        onChangeText={this.onDescriptionChange.bind(this)}
+                    />
+                </View>
 
-                        <View style={styleScan.dropdownViewStyle}>
+                <View style={styleScan.dropdownViewStyle}>
 
-                            <ModalDropdown
-                                defaultValue="Select a category"
+                    <ModalDropdown
+                        defaultValue="Select a category"
 
-                                onSelect={(index, value) => {
-                                    this.setState({selected: value});
-                                }}
-                                options={this.state.options}
-                                onSelect={this.onCategoryChange.bind(this)}
-                                dropdownTextStyle={styleScan.dropdownTextStyle}
-                                textStyle={styleScan.textStyle}
-                                dropdownStyle={styleScan.dropdownStyle}
-                                style={styleScan.styledrop}
-                            />
+                        onSelect={(index, value) => {
+                            this.setState({selected: value});
+                        }}
+                        options={this.state.options}
+                        onSelect={this.onCategoryChange.bind(this)}
+                        dropdownTextStyle={styleScan.dropdownTextStyle}
+                        textStyle={styleScan.textStyle}
+                        dropdownStyle={styleScan.dropdownStyle}
+                        style={styleScan.styledrop}
+                    />
 
-                        </View>
-                    <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.handleAddProduct()}>
-                        <Text style={styleScan.buttonText}>Add Product</Text>
-                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styleScan.loginBtn} onPress={() => this.handleAddProduct()}>
+                    <Text style={styleScan.buttonText}>Add Product</Text>
+                </TouchableOpacity>
             </View>
         );
     }

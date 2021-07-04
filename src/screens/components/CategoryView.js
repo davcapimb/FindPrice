@@ -1,24 +1,12 @@
 import React, {Component} from 'react';
-import {
-    Alert,
-    Button,
-    FlatList,
-    Image,
-    TouchableHighlight,
-    Text,
-    View,
-    ImageBackground,
-    TouchableOpacity,
-} from 'react-native';
+import {FlatList, ImageBackground, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
 import axios from 'axios';
-import {BackHandler} from 'react-native';
 import {showAlert} from '../../Utils';
-import MapView from 'react-native-maps';
-import {styleCategory} from './styles';
+import {images, styleCategory} from './styles';
 import {SearchBar} from 'react-native-elements';
-import {images} from './styles';
 import styles from '../Home/styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+
 export default class CategoryView extends Component {
     constructor(props) {
         super(props);
@@ -64,11 +52,12 @@ export default class CategoryView extends Component {
     };
 
     renderCategory = ({item}) => (
-        <TouchableHighlight underlayColor="rgba(73,182,77,1,0.9)" style={{borderRadius:50}} onPress={() => this.onPressCategory(item)}>
+        <TouchableHighlight underlayColor="rgba(73,182,77,1,0.9)" style={{borderRadius: 50}}
+                            onPress={() => this.onPressCategory(item)}>
             <View style={styleCategory.categoriesItemContainer}>
-            <ImageBackground style={styleCategory.categoriesPhoto} source={images[item.name].uri} >
-                <Text style={styleCategory.categoriesName}>{item.name}</Text>
-            </ImageBackground>
+                <ImageBackground style={styleCategory.categoriesPhoto} source={images[item.name].uri}>
+                    <Text style={styleCategory.categoriesName}>{item.name}</Text>
+                </ImageBackground>
 
             </View>
         </TouchableHighlight>
@@ -95,14 +84,15 @@ export default class CategoryView extends Component {
             <View style={styleCategory.container}>
                 <View style={styleCategory.headerContainer}>
                     <TouchableOpacity style={styles.bottomView}>
-                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40} onPress={() => this.props.navigation.goBack('Draw')}/>
+                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40}
+                                                onPress={() => this.props.navigation.goBack('Draw')}/>
                     </TouchableOpacity>
                     <SearchBar
                         containerStyle={{
                             backgroundColor: 'transparent',
                             borderBottomColor: 'transparent',
                             borderTopColor: 'transparent',
-                            width:'85%'
+                            width: '85%',
 
 
                         }}
@@ -116,15 +106,13 @@ export default class CategoryView extends Component {
                         }}
 
                         clearIcon
-                        //lightTheme
                         round
                         searchIcon
 
                         placeholder="Search..."
                         onChangeText={this.updateSearch}
                         value={search}
-                        // onSubmitEditing={()}
-                        // autoCapitalize={}
+
                     />
                 </View>
                 <FlatList

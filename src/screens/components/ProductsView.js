@@ -1,20 +1,7 @@
-import React, {Component} from "react";
-import {
-    Alert,
-    Button,
-    FlatList,
-    Image,
-    TouchableHighlight,
-    Text,
-    View,
-    ImageBackground,
-    TouchableOpacity,
-} from 'react-native';
-import axios from "axios";
-import {BackHandler} from "react-native";
-import {showAlert} from "../../Utils";
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
-import {ProductCard, styleCategory,images, styleProduct} from './styles';
+import React, {Component} from 'react';
+import {Alert, FlatList, ImageBackground, Text, TouchableHighlight, TouchableOpacity, View} from 'react-native';
+import axios from 'axios';
+import {images, ProductCard, styleCategory, styleProduct} from './styles';
 import {SearchBar} from 'react-native-elements';
 import Geolocation from 'react-native-geolocation-service';
 import styles from '../Home/styles';
@@ -25,99 +12,60 @@ const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = 0.01;
 export default class ProductsView extends Component {
     constructor(props) {
-    super(props);
-    this.state={
-        products:[],
-        search: '',
-        matches:[],
-        region:{
-          latitude: 0,
-          longitude: 0,
-          latitudeDelta: 0,
-          longitudeDelta: 0,
-        },
+        super(props);
+        this.state = {
+            products: [],
+            search: '',
+            matches: [],
+
+        };
     }
-  }
 
     setRegion(region) {
-        this.setState({ region });
+        this.setState({region});
     }
 
-    getCurrentPosition (){
-        try {
-          Geolocation.getCurrentPosition(
-            (position) => {
-              const region = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude,
-                latitudeDelta: LATITUDE_DELTA,
-                longitudeDelta: LONGITUDE_DELTA,
-              };
-              this.setRegion(region);
-            },
-            (error) => {
-              switch (error.code) {
-                case 1:
-                    Alert.alert("", "Please enable the location permissions");
-                    break;
-                default:
-                  Alert.alert("", "Error while detecting your location");
-              }
-            }
-          );
-        } catch(e) {
-          alert(e.message || "");
-        }
-      };
 
     componentDidMount() {
-      var prods = [];
-       this.getCurrentPosition();
-       axios.get('api/v1/prodFilt?cat='+this.props.route.params.category)
-          .then(response => {
-              response.data.map((option) => {
-                  prods.push(
-                      {
-                          id:option.id,
-                          name:option.product_name
+        var prods = [];
+        axios.get('api/v1/prodFilt?cat=' + this.props.route.params.category)
+            .then(response => {
+                response.data.map((option) => {
+                    prods.push(
+                        {
+                            id: option.id,
+                            name: option.product_name,
 
-                      }
-                  );
-              })
-              this.setState({products: prods})
-              this.setState({matches: this.state.products});
+                        },
+                    );
+                });
+                this.setState({products: prods});
+                this.setState({matches: this.state.products});
 
-          })
-          .catch(error => {
-              console.log("error")
-                  // for (const keys of Object.keys(error.response.data)){
-                  //       showAlert(keys, error.response.data[keys].toString());
-                // }
-              }
-          );
-  }
+            })
+            .catch(error => {
+                    console.log('error');
 
-  onPressProduct = item => {
-    const id = item.id;
-    const category = this.props.route.params.category
-    this.props.navigation.navigate('DetailView', { id, category });
-    console.log(this.props.route.params.category)
-  };
+                },
+            );
+    }
 
-  renderProduct = ({ item }) => (
+    onPressProduct = item => {
+        const id = item.id;
+        const category = this.props.route.params.category;
+        this.props.navigation.navigate('DetailView', {id, category});
+    };
+
+    renderProduct = ({item}) => (
 
 
-    <TouchableHighlight style={ProductCard.container} underlayColor='rgba(73,182,77,1,0.9)' onPress={() => this.onPressProduct(item)}>
+        <TouchableHighlight style={ProductCard.container} underlayColor="rgba(73,182,77,1,0.9)"
+                            onPress={() => this.onPressProduct(item)}>
+            <Text style={ProductCard.title}>{item.name}</Text>
+        </TouchableHighlight>
+    );
 
-
-
-        {/*<Image style={styles.categoriesPhoto} source={{ uri: item.photo_url }} />*/}
-        <Text style={ProductCard.title}>{item.name}</Text>
-
-    </TouchableHighlight>
-  );
-
-  updateSearch = (search) => {
+    updateSearch = (search) => {
         let match = [];
         let substring;
         this.setState({search});
@@ -133,23 +81,24 @@ export default class ProductsView extends Component {
         this.setState({matches: match});
     };
 
-    onRegionChange(region) {
-      this.setState({ region });
-    }
+
+
     render() {
         const {search} = this.state;
         return (
             <View style={styleCategory.container}>
-               <View style={styleCategory.headerContainer}>
+                <View style={styleCategory.headerContainer}>
                     <TouchableOpacity style={styles.bottomView}>
-                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40} onPress={() => this.props.navigation.navigate({name:'Draw', key:"Tab"})}/>
+                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40}
+                                                onPress={() => this.props.navigation.goBack('Draw')}
+                        />
                     </TouchableOpacity>
                     <SearchBar
                         containerStyle={{
                             backgroundColor: 'transparent',
                             borderBottomColor: 'transparent',
                             borderTopColor: 'transparent',
-                            width:'85%'
+                            width: '85%',
 
 
                         }}
@@ -163,32 +112,30 @@ export default class ProductsView extends Component {
                         }}
 
                         clearIcon
-                        //lightTheme
                         round
                         searchIcon
-
                         placeholder="Search..."
                         onChangeText={this.updateSearch}
                         value={search}
-                        // onSubmitEditing={()}
-                        // autoCapitalize={}
+
                     />
                 </View>
-                 <View style={styleProduct.topPhotoContainer}>
-                     <ImageBackground style={styleCategory.categoriesPhoto} source={images[this.props.route.params.category].uri} >
-                <Text style={styleCategory.categoriesName}>{this.props.route.params.category}</Text>
-                 </ImageBackground>
+                <View style={styleProduct.topPhotoContainer}>
+                    <ImageBackground style={styleCategory.categoriesPhoto}
+                                     source={images[this.props.route.params.category].uri}>
+                        <Text style={styleCategory.categoriesName}>{this.props.route.params.category}</Text>
+                    </ImageBackground>
 
                 </View>
                 <FlatList
-                  data={this.state.matches}
-                  renderItem={this.renderProduct}
-                  keyExtractor={item => `${item.id}`}
+                    data={this.state.matches}
+                    renderItem={this.renderProduct}
+                    keyExtractor={item => `${item.id}`}
                 />
 
             </View>
-    );
-  }
+        );
+    }
 }
 
 

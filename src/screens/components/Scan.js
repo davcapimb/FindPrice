@@ -1,13 +1,13 @@
-import React, {Component, useState} from 'react';
-import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {Image, PermissionsAndroid, Text, TextInput, TouchableOpacity, View,ToastAndroid} from 'react-native';
+import React, {Component} from 'react';
+import {launchCamera} from 'react-native-image-picker';
+import {Image, PermissionsAndroid, Text, TextInput, ToastAndroid, TouchableOpacity, View} from 'react-native';
 import axios from 'axios';
 import ModalDropdown from 'react-native-modal-dropdown';
 import Geolocation from 'react-native-geolocation-service';
 import RNMlKit from 'react-native-firebase-mlkit';
 import {showAlert} from '../../Utils';
 import {images, styleScan} from './styles';
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Scan extends Component {
     state = {
@@ -60,7 +60,7 @@ export default class Scan extends Component {
                         buttonNeutral: 'Ask Me Later',
                         buttonNegative: 'Cancel',
                         buttonPositive: 'OK',
-                    }
+                    },
                 );
 
                 if (granted) {
@@ -69,7 +69,6 @@ export default class Scan extends Component {
                             this.setState({lat: position.coords.latitude, long: position.coords.longitude});
                         },
                         (error) => {
-                            // See error code charts below.
                             errorMsg = 'Permission to access location was denied';
                             showAlert('position', errorMsg);
                             console.log(error.code, error.message);
@@ -83,7 +82,7 @@ export default class Scan extends Component {
         })();
     };
 
-    reloadProducts (){
+    reloadProducts() {
         var prods = [];
         var prod_name = [];
         axios.get('api/v1/products/')
@@ -105,14 +104,13 @@ export default class Scan extends Component {
         launchCamera({mediaType: 'image'}, async (media) => {
                 if (!media.didCancel) {
                     this.setState({image: media.assets[0].uri});
-                    try{
+                    try {
                         ToastAndroid.show('Processing the image...', ToastAndroid.LONG);
                         const priceRecognized = await RNMlKit.cloudTextRecognition(media.assets[0].uri);
                         this.setState({result: priceRecognized});
                         await this.onTakePrice();
-                    }
-                    catch (e) {
-                            ToastAndroid.show('Error! Try with a better photo', ToastAndroid.SHORT);
+                    } catch (e) {
+                        ToastAndroid.show('Error! Try with a better photo', ToastAndroid.SHORT);
                     }
 
                 }
@@ -163,12 +161,10 @@ export default class Scan extends Component {
             });
         }
 
-        if(current_price[0].includes(",")){
+        if (current_price[0].includes(',')) {
             current_price[0] = current_price[0].replace(/,/g, '.');
         }
-        // if(current_price[0].match(/[\$\£\€]+/) != undefined){
-        //     current_price[0] = current_price[0].replace(/[\$\£\€]/g, '');
-        // }
+
 
         this.setState({price: current_price[0]});
         this.priceInput.setNativeProps({text: current_price[0]});
@@ -194,7 +190,7 @@ export default class Scan extends Component {
         axios.post('api/v1/scans/', payload)
             .then(response => {
                 ToastAndroid.show('New scan added!', ToastAndroid.SHORT);
-                this.priceInput.setNativeProps({placeholder:'Price'});
+                this.priceInput.clear();
                 this.props.navigation.navigate('Draw');
 
             })
@@ -211,7 +207,6 @@ export default class Scan extends Component {
 
         return (
             <View style={styleScan.container}>
-                {/*<LOGO width="130" height="130"/>*/}
                 <Text style={styleScan.logo}>Add Scan</Text>
                 <View style={styleScan.dropdownViewStyle}>
                     <ModalDropdown
@@ -229,7 +224,6 @@ export default class Scan extends Component {
                     />
                     <TouchableOpacity style={styleScan.button} onPress={() => this.reloadProducts()}>
                         <MaterialCommunityIcons name="reload" color={'#474747FF'} size={20}/>
-                        {/*<Image style={styleScan.icon} source={images['ScanTAB'].uri} />*/}
                     </TouchableOpacity>
                 </View>
                 <View style={styleScan.inputView}>
@@ -243,11 +237,9 @@ export default class Scan extends Component {
                         onChangeText={this.onPriceChange.bind(this)}
                     />
                     <TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>
-                        <Image style={styleScan.icon} source={images['ScanTAB'].uri} />
+                        <Image style={styleScan.icon} source={images['ScanTAB'].uri}/>
                     </TouchableOpacity>
-                    {/*<TouchableOpacity style={styleScan.button} onPress={() => this.onSelectImage()}>*/}
-                    {/*    <Image style={styleScan.icon} source={images['ScanTAB'].uri}/>*/}
-                    {/*</TouchableOpacity>*/}
+
 
                 </View>
 
@@ -255,9 +247,7 @@ export default class Scan extends Component {
                     <Text style={styleScan.loginText}>Add scan</Text>
                 </TouchableOpacity>
 
-                {/*<TouchableOpacity style={styleScan.button} onPress={() => this.onTakePhoto()}>*/}
-                {/*    <Text style={styleScan.buttonText}>Take Photo</Text>*/}
-                {/*</TouchableOpacity>*/}
+
                 {/*<TouchableOpacity style={styleScan.loginBtn} onPress={() => this.onSelectImage()}>*/}
                 {/*    <Text style={styleScan.buttonText}>Take Image</Text>*/}
                 {/*</TouchableOpacity>*/}

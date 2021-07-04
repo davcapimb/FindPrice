@@ -3,20 +3,16 @@ import CategoryView from './src/screens/components/CategoryView';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import DetailView from './src/screens/components/DetailView';
-import {createDrawerNavigator, DrawerItem, DrawerItemList, DrawerView} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import Login from './src/screens/Account/Login.js';
 import Register from './src/screens/Account/Register.js';
 import Logout from './src/screens/Account/Logout.js';
 import Scan from './src/screens/components/Scan.js';
 import HomeScreen from './src/screens/Home/HomeScreen';
 import ProductsView from './src/screens/components/ProductsView';
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Map from './src/screens/tabs/Map.js';
-import TabTwo from './src/screens/tabs/tab2.js';
 import axios from 'axios';
-import {SafeAreaView} from 'react-navigation';
-import {Button, TouchableOpacity, ScrollView, Text, StyleSheet} from 'react-native';
 import AddProduct from './src/screens/components/AddProduct';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ResetPsw from './src/screens/Account/ResetPsw';
@@ -81,8 +77,7 @@ export default class App extends Component {
     renderDrawerComponents = () => {
         return (
             <Drawer.Navigator drawerStyle={{
-                backgroundColor: '#bb9d84',
-                opacity:0.8,
+                backgroundColor: 'rgb(213,133,0)',
                 width: 180,
             }}>
                 <Drawer.Screen name="Tab">

@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Alert, BackHandler} from 'react-native';
-import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
+import {Alert, StyleSheet, View} from 'react-native';
+import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import axios from 'axios';
-import {showAlert} from '../../Utils'; // remove PROVIDER_GOOGLE import if not using Google Maps
 
 const LATITUDE_DELTA = 0.01;
 const LONGITUDE_DELTA = 0.01;
@@ -62,21 +61,13 @@ class Map extends Component {
             .then(response => {
                 response.data.map((option) => {
                     prods[option.id] = option.product_name;
-                    // prods.push(
-                    //     {
-                    //         id:option.id,
-                    //         name:option.product_name
-                    //
-                    //     }
-                    // );
+
                 });
                 this.setState({products: prods});
             })
             .catch(error => {
                     console.log('error');
-                    // for (const keys of Object.keys(error.response.data)){
-                    //       showAlert(keys, error.response.data[keys].toString());
-                    // }
+
                 },
             );
 
@@ -112,8 +103,6 @@ class Map extends Component {
             })
             .catch(error => {
                     console.log(error);
-                    // for (const keys of Object.keys(error.response.data)){
-                    //     showAlert(keys, error.response.data[keys].toString());
 
                 },
             );
@@ -128,7 +117,7 @@ class Map extends Component {
         return (
             <View style={styles.container}>
                 <MapView
-                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    provider={PROVIDER_GOOGLE}
                     showsUserLocation
                     style={styles.map}
                     region={this.state.region}
