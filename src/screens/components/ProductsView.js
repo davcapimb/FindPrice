@@ -89,7 +89,7 @@ export default class ProductsView extends Component {
             <View style={styleCategory.container}>
                 <View style={styleCategory.headerContainer}>
                     <TouchableOpacity style={styles.bottomView}>
-                        <MaterialCommunityIcons name="home" color={'#EDEDED'} size={40}
+                        <MaterialCommunityIcons name="chevron-left" color={'#EDEDED'} size={40}
                                                 onPress={() => this.props.navigation.goBack('Draw')}
                         />
                     </TouchableOpacity>
