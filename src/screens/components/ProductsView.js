@@ -72,7 +72,7 @@ export default class ProductsView extends Component {
         this.state.products.map((option) => {
             substring = option.name.substring(0, search.length);
 
-            if (substring === search.toLowerCase()) {
+            if (substring.toLowerCase() === search.toLowerCase()) {
                 match.push(option);
                 console.log(match);
             }
